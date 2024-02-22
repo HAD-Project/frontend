@@ -1,8 +1,9 @@
+import Doctor from "./pages/doctor";
+import Patient from "./pages/patient";
+
 function App() {
   return (
-    <div>
-      HAD Project
-    </div>
+    <Patient />
   );
 }
 
