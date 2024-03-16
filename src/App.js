@@ -1,9 +1,8 @@
-import Doctor from "./pages/doctor";
-import Patient from "./pages/patient";
 
+import AdminReception from "./pages/adminReceptionists";
 function App() {
   return (
-    <Patient />
+    <AdminReception />
   );
 }
 
