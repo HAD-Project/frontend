@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useSelector } from "react-redux";
 import PatientCard from "./components/PatientCard";
 import PrescriptionTable from "./components/PrescriptionTable";
 import RecordsTable from "./components/RecordsTable";
