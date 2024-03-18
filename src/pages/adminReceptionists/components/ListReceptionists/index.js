@@ -11,6 +11,9 @@ import { faEllipsisV } from '@fortawesome/free-solid-svg-icons/faEllipsisV';
 import { useState } from "react";
 import AddReceptionists from '../AddReceptionists';
 import { Paper, makeStyles, } from '@material-ui/core';
+import Popup from '../controls/Popup';
+import AddCircleRoundedIcon from '@mui/icons-material/AddCircleRounded';
+
 function ListReceptionists() {
     const [data] = useState([{name:'Tarun',img:'/receptionists.jpg'},{name:'Tarun',img:'/receptionists.jpg'},{name:'Tarun',img:'/receptionists.jpg'}])
     const [anchorEl, setAnchorEl] = React.useState(null);
@@ -26,9 +29,11 @@ function ListReceptionists() {
             width: '100%',
             margin: theme.spacing(5),
             padding: theme.spacing(3)
-        }
+        },
+        
     }))
     const classes = useStyles();
+    const [openPopup, setOpenPopup] = useState(false)
   return (
     <Container>
         <Container
@@ -42,9 +47,9 @@ function ListReceptionists() {
             gridTemplateColumns="repeat(12, 1fr)"
             gap={2}
             sx={{ width: '100%' }}
-        >
+            >
             {data.map((d,index)=>(
-            <Box key={index} className={styles.element} gridColumn="span 12" sx={{ display: 'flex', alignItems: 'center',justifyContent: 'space-between' }}>
+                <Box key={index} className={styles.element} gridColumn="span 12" sx={{ display: 'flex', alignItems: 'center',justifyContent: 'space-between' }}>
             <img className={styles.image} src={d.img} alt="/receptionists.jpg" style={{ marginRight: '8px' }} />
             {d.name}
             <div>
@@ -66,8 +71,8 @@ function ListReceptionists() {
                     open={open}
                     onClose={handleClose}
                     anchorOrigin={{
-                    vertical: 'top',
-                    horizontal: 'left',
+                        vertical: 'top',
+                        horizontal: 'left',
                     }}
                     transformOrigin={{vertical: 'top',horizontal: 'left',}}>
                     <MenuItem  onClick={handleClose} style={{ backgroundColor: 'rgba(0, 0, 220, 0.5)', color: 'white',borderRadius:'10px',marginBottom:'10px',marginLeft:'5px',marginRight:'5px' }}>View</MenuItem>
@@ -77,11 +82,19 @@ function ListReceptionists() {
                 </div>
             </Box>
             ))}
-            <Paper  className={classes.pageContent}>
-            <AddReceptionists/>
-            </Paper>
+      
+        <Box  gridColumn="span 12" sx={{ display: 'flex', alignItems: 'center',justifyContent: 'flex-end' }}>
+            <AddCircleRoundedIcon 
+                variant="outlined" 
+                onClick={() => setOpenPopup(true)}
+                style={{ color: '#9C9CFB',  fontSize: '40px' }} // Change color to blue
+                />
+        </Box>
         </Box>
         </Container>
+        <Popup openPopup={openPopup} setOpenPopup={setOpenPopup}>
+            <AddReceptionists/>
+        </Popup>
     </Container>    
   );
 }
