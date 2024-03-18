@@ -56,9 +56,7 @@ const AddReceptionists = () => {
     return (
         <Form onSubmit={handleSubmit}>
             <Grid container spacing={2} >
-                <Grid item xs={12}>
-                    Add Receptionists
-                </Grid>
+                
                 <Grid item xs={12}>
                     <Input name="name" label="name" value={receptionists.name} onChange={handleInputChange} error={errors.name}/>
                 </Grid>
