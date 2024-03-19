@@ -48,7 +48,7 @@ const PatientList = () => {
                     <TableRow key={pat.patientId} style={{backgroundColor: idx % 2 == 0 ? "white" : "#e8e8e8"}}>
                         <TableCell>{pat.patientId}</TableCell>
                         <TableCell>{pat.name}</TableCell>
-                        <TableCell><Button variant="contained" style={{backgroundColor: "rgba(0, 0, 220, 0.5)"}} onClick={() => showPatient(pat)}>View</Button></TableCell>
+                        <TableCell><Button variant="contained" style={{backgroundColor: "rgba(0, 0, 220, 0.5)"}} onClick={() => showPatient(pat.patientId)}>View</Button></TableCell>
                     </TableRow>
                 ))}
             </TableBody>
