@@ -1,7 +1,9 @@
+import PageRoutes from "./routes";
+
 function App() {
   return (
     <div>
-      HAD Project
+      <PageRoutes/>
     </div>
   );
 }
