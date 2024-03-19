@@ -8,30 +8,31 @@ const AddAppointment = () => {
   const [selectedTime, setSelectedTime] = useState('');
 
   const handleAddAppointment = () => {
-    if (patientID && selectedDoctor && selectedTime) {
-      const newAppointment = {
-        patientID: patientID,
-        doctor: selectedDoctor,
-        time: selectedTime
-      };
-
-      // Send appointment data to the backend
-      axios.post('/api/appointments', newAppointment)
-        .then(response => {
-          console.log(response.data);
-          // Reset fields after adding appointment
-          setPatientID('');
-          setSelectedDoctor('');
-          setSelectedTime('');
-        })
-        .catch(error => {
-          console.error('Error adding appointment:', error);
-        });
-    } else {
+    if (patientID.trim() === '' || selectedDoctor.trim() === '' || selectedTime.trim() === '') {
       alert('Please enter patient ID, select doctor, and select time for the appointment.');
+      return;
     }
+  
+    const newAppointment = {
+      patientID: patientID,
+      doctor: selectedDoctor,
+      time: selectedTime
+    };
+  
+    // Send appointment data to the backend
+    axios.post('/api/appointments', newAppointment)
+      .then(response => {
+        console.log(response.data);
+        // Reset fields after adding appointment
+        setPatientID('');
+        setSelectedDoctor('');
+        setSelectedTime('');
+      })
+      .catch(error => {
+        console.error('Error adding appointment:', error);
+      });
   };
-
+  
   return (
     <div style={{ display: 'flex', justifyContent: 'center', marginTop: '200px' }}>
       <Card variant="outlined" sx={{ maxWidth: 500, width: '100%' }}>
@@ -60,9 +61,15 @@ const AddAppointment = () => {
             onChange={(e) => setSelectedTime(e.target.value)}
             sx={{ marginBottom: 2 }}
           />
-          <Button variant="contained" color="primary" onClick={handleAddAppointment}>
+          <div className='container'>
+          <Button variant="contained" color="primary" onClick={handleAddAppointment} style={{borderRadius:'10px'}}>
             Add Appointment
           </Button>
+          <Button variant="contained" color="error" onClick={handleAddAppointment} style={{float:'right', borderRadius:'10px'}}>
+            Cancel
+          </Button>
+          </div>
+          
         </CardContent>
       </Card>
     </div>
