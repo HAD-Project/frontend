@@ -1,0 +1,54 @@
+.rec-dashboard-main {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+}
+.rec-dashboard-cards-section {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+  width: 100%;
+}
+.rec-dashboard-card {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  width: 100%;
+}
+.rec-dashboard-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  width: 100%;
+}
+.rec-dashboard-card-title {
+  font-size: 18px;
+  font-weight: bold;
+  color: #007ea7;
+}
+.rec-dashboard-card-value {
+  font-size: 34px;
+  font-weight: bold;
+}
+.rec-dashboard-tables-section {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+  width: 100%;
+}
+.rec-dashboard-card-icon{
+    width: 48px;
+    height: 48px;
+    /* color: #007ea7 !important; */
+}

@@ -1,24 +1,17 @@
+import PageRoutes from "./routes";
+import "./assets/styles/styles.css"
 import DoctorList from "./pages/admin/components/DoctorList/DoctorList";
 import Doctor from "./pages/doctor";
 import Patient from "./pages/patient";
-import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
-  Link
-} from "react-router-dom";
 
 function App() {
   return (
-    <Router>
-      <Routes>
-        <Route path="/doctor" element={<Doctor />} />
+    <div>
+      <PageRoutes/>
+    <Route path="/doctor" element={<Doctor />} />
         <Route path="/patient" element={<Patient />} />
         <Route path="/admin" element={<><DoctorList/></>} />
-        <Route path="/" element={<>HAD</>}>
-        </Route>
-      </Routes>
-    </Router>
+    </div>
   );
 }
 
