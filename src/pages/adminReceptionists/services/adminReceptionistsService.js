@@ -11,6 +11,9 @@ class AdminReceptionistsService {
     deleteReceptionists(id){
         return axios.delete(BASE_URL+"/receptionist/"+id);
     }
+    updateReceptionists(id,receptionists){
+        return axios.put(BASE_URL+"/receptionist/"+id,receptionists);
+      }
 }
 
 const adminReceptionistsServiceInstance = new AdminReceptionistsService();
