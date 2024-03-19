@@ -1,6 +1,7 @@
 import React from "react";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import Login from "../Pages/Login";
+import ReceptionistDashboard from "../Pages/RecptionistDashboard";
 // import PageNavigation from "../Components/Navigation";
 
 const PageRoutes = () => {
@@ -14,7 +15,7 @@ const PageRoutes = () => {
 
         <Route
           path="/receptionist/dashboard"
-          element={<div>receptionist overview</div>}
+          element={<ReceptionistDashboard/>}
         />
 
         <Route

@@ -107,20 +107,3 @@
   color: #d62828;
 }
 
-/* common styles */
-.hsc-btn-contain {
-  font-size: 14px;
-  font-weight: bold;
-  text-transform: uppercase;
-  padding: 7px;
-  border-radius: 7px;
-  background-color: #007ea7;
-  color: #ffffff;
-  outline: none;
-  border: 1px solid #007ea7;
-  box-shadow: 0 0 2px #007ea7;
-}
-.hsc-btn-contain:hover {
-  box-shadow: 0 0 5px #007ea7;
-  font-weight: bolder;
-}
