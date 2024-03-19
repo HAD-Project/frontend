@@ -1,5 +1,5 @@
 import React from "react";
-import Card from "../../../Components/Card";
+import Card from "../../../components/Card";
 
 const RecCard = ({ name, value, Icon }) => {
   return (

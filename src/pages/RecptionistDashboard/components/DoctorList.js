@@ -1,5 +1,5 @@
 import React from "react";
-import ContainerCard from "../../../Components/ContainerCard";
+import ContainerCard from "../../../components/ContainerCard";
 import {
     Paper,
   Table,

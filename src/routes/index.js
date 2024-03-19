@@ -1,7 +1,8 @@
 import React from "react";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
-import Login from "../Pages/Login";
-import ReceptionistDashboard from "../Pages/RecptionistDashboard";
+import Login from "../pages/Login";
+import ReceptionistDashboard from "../pages/RecptionistDashboard";
+import ReceptionistPatients from "../pages/ReceptionistPatients";
 // import PageNavigation from "../Components/Navigation";
 
 const PageRoutes = () => {
@@ -15,12 +16,12 @@ const PageRoutes = () => {
 
         <Route
           path="/receptionist/dashboard"
-          element={<ReceptionistDashboard/>}
+          element={<ReceptionistDashboard />}
         />
 
         <Route
           path="/receptionist/patients"
-          element={<div>receptionist patients</div>}
+          element={<ReceptionistPatients />}
         />
 
         {/* doctor */}
