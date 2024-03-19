@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Grid } from '@material-ui/core';
 import { Form, useForm } from './useForm';
 import { Input } from '../controls/Input';
@@ -11,17 +11,19 @@ const genderItems = [
   { id: 'other', title: 'Other' },
 ]
 
-const initialFValues = {
-    name: '',
-    gender: 'male',
-    username: '',
-    password: '',
-    email: '',
-    phone: '',
-    qualifications: ''
-}
 
-const AddReceptionists = () => {
+
+const AddReceptionists = (props) => {
+    const [receptionists,setReceptionists] = useState({
+        name: '',
+        gender: 'male',
+        username: '',
+        password: '',
+        email: '',
+        phone: '',
+        qualifications: ''
+    });
+
     const validate = (fieldValues = receptionists) => {
         let temp = { ...errors }
         if ('name' in fieldValues)
@@ -44,45 +46,53 @@ const AddReceptionists = () => {
         if (fieldValues === receptionists)
             return Object.values(temp).every(x => x === "")
     }
-    const { receptionists,errors,
-      setErrors, handleInputChange,resetForm } = useForm(initialFValues,true,validate);
+    const { updatedreceptionists,errors,
+      setErrors, handleInputChange,resetForm } = useForm(receptionists,true,validate);
 
-    const handleSubmit = e => {
+    const handleSubmit = async(e) => {
+      let response
       e.preventDefault()
       if(validate())
-      window.alert('testing')
+      console.log(updatedreceptionists);
+    //   response = await props.receptionistsService.createReceptionists(receptionists);
+    //   if (Object.keys(response.data).length > 0) window.location.reload();
     }
 
+    useEffect(() => {
+        if (props.userData===null) {
+        } else {
+            setReceptionists(props.userData);
+        }
+      }, [props.userData]);
     return (
         <Form onSubmit={handleSubmit}>
             <Grid container spacing={2} >
-                
                 <Grid item xs={12}>
-                    <Input name="name" label="name" value={receptionists.name} onChange={handleInputChange} error={errors.name}/>
+                    <Input name="name" label="name" value={updatedreceptionists.name} onChange={handleInputChange} error={errors.name}/>
                 </Grid>
                 <Grid item xs={12}>
-                    <Input label="username" name="username" value={receptionists.username} onChange={handleInputChange} error={errors.username}/>
+                    <Input label="username" name="username" value={updatedreceptionists.username} onChange={handleInputChange} error={errors.username}/>
                 </Grid>
                 <Grid item xs={12}>
                   <RadioGroup
                           name="gender"
                           label="Gender"
-                          value={receptionists.gender}
+                          value={updatedreceptionists.gender}
                           onChange={handleInputChange}
                           items={genderItems}
                       />
                 </Grid>
                 <Grid item xs={12}>
-                    <Input label="email" name="email" value={receptionists.email} onChange={handleInputChange} error={errors.email}/>
+                    <Input label="email" name="email" value={updatedreceptionists.email} onChange={handleInputChange} error={errors.email}/>
                 </Grid>
                 <Grid item xs={12}>
-                    <Input label="password" name="password" value={receptionists.password} onChange={handleInputChange} error={errors.password}/>
+                    <Input label="password" name="password" value={updatedreceptionists.password} onChange={handleInputChange} error={errors.password}/>
                 </Grid>
                 <Grid item xs={12}>
-                    <Input label="phone" name="phone" value={receptionists.phone} onChange={handleInputChange} error={errors.phone}/>
+                    <Input label="phone" name="phone" value={updatedreceptionists.phone} onChange={handleInputChange} error={errors.phone}/>
                 </Grid>
                 <Grid item xs={12}>
-                    <Input label="qualifications" name="qualifications" value={receptionists.qualifications} onChange={handleInputChange} error={errors.qualifications}/>
+                    <Input label="qualifications" name="qualifications" value={updatedreceptionists.qualifications} onChange={handleInputChange} error={errors.qualifications}/>
                 </Grid>
                 <div>
                     <Button
