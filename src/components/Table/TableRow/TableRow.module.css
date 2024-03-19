@@ -1,0 +1,70 @@
+.tableRow {
+    margin: 15px 0px 15px 0px;
+    padding: 10px 20px;
+    background-color: rgba(0, 0, 220, 0.5);
+    border-radius: 5px;
+}
+
+.menuButton {
+    float: right;
+    background-color: transparent;
+    border: none;
+    color: white;
+}
+
+.tableCenter {
+    display: flex;
+    align-items: center;
+}
+
+.tableExpand {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.tablePara {
+    color: white;
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+  }
+
+.dropdownContent {
+    display: none;
+    position: absolute;
+    background-color: #f1f1f1;
+    min-width: 160px;
+    transform: translateX(-136px) translateY(30px);
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    opacity: 200%;
+    z-index: 1;
+  }
+  
+  /* Links inside the dropdown */
+  .dropdownContent button {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    background-color: transparent;
+    border: none;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+  }
+  
+  /* Show the dropdown menu on hover */
+  .dropdown:hover .dropdownContent {
+    display: block;
+    border-radius: 5px;
+    
+
+}
+  
+.extensionRow {
+    background-color: rgba(190, 190, 251, 0.57);
+    padding: 10px 20px;
+    border-radius: 5px;
+}

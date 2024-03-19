@@ -1,3 +1,4 @@
+import DoctorList from "./pages/admin/components/DoctorList/DoctorList";
 import Doctor from "./pages/doctor";
 import Patient from "./pages/patient";
 import {
@@ -13,6 +14,7 @@ function App() {
       <Routes>
         <Route path="/doctor" element={<Doctor />} />
         <Route path="/patient" element={<Patient />} />
+        <Route path="/admin" element={<><DoctorList/></>} />
         <Route path="/" element={<>HAD</>}>
         </Route>
       </Routes>
