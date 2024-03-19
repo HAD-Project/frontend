@@ -1,0 +1,47 @@
+/* common styles */
+/* buttons */
+.hsc-btn-contain {
+  font-size: 14px;
+  font-weight: bold;
+  text-transform: uppercase;
+  padding: 7px;
+  border-radius: 7px;
+  background-color: #007ea7;
+  color: #ffffff;
+  outline: none;
+  border: 1px solid #007ea7;
+  box-shadow: 0 0 2px #007ea7;
+}
+.hsc-btn-contain:hover {
+  box-shadow: 0 0 5px #007ea7;
+  font-weight: bolder;
+}
+/* card */ /* container card */
+.hsc-card {
+  border: 1px solid #bbb;
+  border-radius: 7px;
+  box-shadow: 2px 2px 5px #ccc;
+  padding: 10px;
+  width: 100%;
+}
+
+.hsc-container-card {
+  border: 1px solid #bbb;
+  border-radius: 7px;
+  box-shadow: 2px 2px 5px #ccc;
+  width: 100%;
+
+  display: flex;
+  flex-direction: column;
+}
+.hsc-container-card-title {
+  font-size: 18px;
+  font-weight: bold;
+  color: #007ea7;
+  border-bottom: 1px solid #ccc;
+  padding: 10px;
+}
+.hsc-container-card-body{
+    padding: 10px;
+}
+

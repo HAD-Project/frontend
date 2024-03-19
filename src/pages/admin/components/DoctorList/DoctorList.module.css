@@ -1,0 +1,12 @@
+.addButton {
+    float: right;
+    border-radius: 50%;
+    height: 50px;
+    width: 50px;
+    border: none;
+    background-color: rgba(156, 156, 251, 1);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
