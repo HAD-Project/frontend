@@ -6,7 +6,7 @@ import ReceptionistPatients from "../pages/ReceptionistPatients";
 import DoctorList from "../pages/admin/components/DoctorList/DoctorList";
 import Doctor from "../pages/doctor";
 import Patient from "../pages/patient";
-// import PageNavigation from "../Components/Navigation";
+import PageNavigation from "../components/Navigation";
 
 const PageRoutes = () => {
   return (
@@ -16,23 +16,24 @@ const PageRoutes = () => {
         <Route path="/" element={<Navigate to="/login" />} />
         <Route path="/login" element={<Login />} />
         {/* receptionist */}
+        <Route path="/" element={<PageNavigation />}>
 
         <Route
-          path="/receptionist/dashboard"
+          path="receptionist/dashboard"
           element={<ReceptionistDashboard />}
         />
 
         <Route
-          path="/receptionist/patients"
+          path="receptionist/patients"
           element={<ReceptionistPatients />}
         />
 
         {/* doctor */}
         {/* admin */}
-        <Route path="/doctor" element={<Doctor />} />
-        <Route path="/patient" element={<Patient />} />
+        <Route path="doctor" element={<Doctor />} />
+        <Route path="patient" element={<Patient />} />
         <Route
-          path="/admin"
+          path="admin"
           element={
             <>
               <DoctorList />
@@ -41,6 +42,7 @@ const PageRoutes = () => {
         />
         {/* not match */}
         <Route path="*" element={<div>no match found</div>} />
+        </Route>
       </Routes>
     </BrowserRouter>
   );
