@@ -9,7 +9,6 @@ import Patient from "../pages/patient";
 import AdminReception from "../pages/adminReceptionists";
 import PageNavigation from "../components/Navigation";
 
-
 const PageRoutes = () => {
   return (
     <BrowserRouter>
@@ -19,34 +18,38 @@ const PageRoutes = () => {
         <Route path="/login" element={<Login />} />
         {/* receptionist */}
         <Route path="/" element={<PageNavigation />}>
+          <Route
+            path="receptionist/dashboard"
+            element={<ReceptionistDashboard />}
+          />
 
-        <Route
-          path="receptionist/dashboard"
-          element={<ReceptionistDashboard />}
-        />
+          <Route
+            path="receptionist/patients"
+            element={<ReceptionistPatients />}
+          />
 
-        <Route
-          path="receptionist/patients"
-          element={<ReceptionistPatients />}
-        />
-        <Route path="/doctor" element={<div><Doctor /></div>} />      
-            <Route path="/patient" element={<div><Patient /></div>} />
-            <Route path="/admin" element={<div><DoctorList/></div>} />
-            <Route path="/adminreceptionists" element={<div><AdminReception/></div>}/>
-        {/* doctor */}
-        {/* admin */}
-        <Route path="doctor" element={<Doctor />} />
-        <Route path="patient" element={<Patient />} />
-        <Route
-          path="admin"
-          element={
-            <>
-              <DoctorList />
-            </>
-          }
-        />
-        {/* not match */}
-        <Route path="*" element={<div>no match found</div>} />
+          {/* doctor */}
+          {/* admin */}
+          <Route path="doctor" element={<Doctor />} />
+          <Route path="patient" element={<Patient />} />
+          <Route
+            path="admin"
+            element={
+              <>
+                <DoctorList />
+              </>
+            }
+          />
+          <Route
+            path="adminreceptionists"
+            element={
+              <div>
+                <AdminReception />
+              </div>
+            }
+          />
+          {/* not match */}
+          <Route path="*" element={<div>no match found</div>} />
         </Route>
       </Routes>
     </BrowserRouter>
