@@ -1,7 +1,7 @@
-const receptionist_links=[
+export const receptionist_links=[
     {
         title:"Overview",
-        path:"/receptionist/overview",
+        path:"/receptionist/dashboard",
         icon:""
     },
     {
@@ -12,6 +12,21 @@ const receptionist_links=[
     {
         title:"Appointments",
         path:"/receptionist/appointments",
+        icon:""
+    },
+    {
+        title:"Doctor Dashboard",
+        path:"/doctor",
+        icon:""
+    },
+    {
+        title:"Patient",
+        path:"/patient",
+        icon:""
+    },
+    {
+        title:"Admin",
+        path:"/admin",
         icon:""
     }
 ]
