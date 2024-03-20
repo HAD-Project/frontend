@@ -28,7 +28,7 @@ const Patient = () => {
 
         fetchPatientData();
 
-    }, [])
+    })
 
     console.log(patientId);
 

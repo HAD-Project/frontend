@@ -5,6 +5,7 @@ import Doctor from "./pages/doctor";
 import Patient from "./pages/patient";
 
 import AdminReception from "./pages/adminReceptionists";
+import { Route } from "react-router-dom";
 function App() {
   return (
     <div>
@@ -12,6 +13,7 @@ function App() {
     <Route path="/doctor" element={<Doctor />} />
         <Route path="/patient" element={<Patient />} />
         <Route path="/admin" element={<><DoctorList/></>} />
+        <Route path="/adminreceptionists" element={<AdminReception/>}/>
     </div>
   );
 }
