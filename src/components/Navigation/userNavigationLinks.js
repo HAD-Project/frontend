@@ -28,5 +28,10 @@ export const receptionist_links=[
         title:"Admin",
         path:"/admin",
         icon:""
-    }
+    },
+    {
+        title:"Admin Recepionists",
+        path:"/adminreceptionists",
+        icon:""
+    },
 ]
