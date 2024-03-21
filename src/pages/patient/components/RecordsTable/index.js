@@ -1,3 +1,5 @@
+import { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableHead from '@mui/material/TableHead';
@@ -5,34 +7,24 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import Button from '@mui/material/Button';
 import { TableCell } from '@mui/material';
+import { ADDRESS } from "../../../../utils";
 
 const RecordsTable = () => {
-    const records = [
-        {
-            id: 1,
-            name: "ABC",
-            type: "Prescription",
-            date: "DD/MM/YYYY",
-        },
-        {
-            id: 2,
-            name: "ABC",
-            type: "Diagnostic",
-            date: "DD/MM/YYYY",
-        },
-        {
-            id: 3,
-            name: "ABC",
-            date: "DD/MM/YYYY",
-            type: "Immunization",
-        },
-        {
-            id: 4,
-            name: "ABC",
-            date: "DD/MM/YYYY",
-            type: "Prescription",
-        },
-    ];
+    const [records, setRecords] = useState([]);
+    const patientId = useSelector(state => state.doctor.patientId);
+
+    useEffect(() => {
+        const fetchRecords = async () => {
+            await fetch(`${ADDRESS}/api/doctor/getRecords?patientId=${patientId}`, {
+                method: "GET",
+            })
+            .then(res => res.json())
+            .then(data => console.log(data))
+            .catch(e => console.log(e));
+        }
+
+        fetchRecords();
+    })
 
     return (
         <Table style={{width: 700}} component={Paper}>

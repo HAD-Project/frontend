@@ -30,7 +30,6 @@ const Patient = () => {
 
     }, [])
 
-    console.log(patientId);
 
     return (
         <div className={styles.root}>
