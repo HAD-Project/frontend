@@ -15,8 +15,9 @@ import {
   useTheme,
   styled,
   Button,
+  Grow,
 } from "@mui/material";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
 import hospital_logo from "../../assets/images/logo/logo-full.png";
 
@@ -25,6 +26,8 @@ import { receptionist_links as links } from "./userNavigationLinks";
 import MailIcon from "@mui/icons-material/Mail";
 import MenuIcon from "@mui/icons-material/Menu";
 import InboxIcon from "@mui/icons-material/MoveToInbox";
+import RegisterPatient from "../RegisterPatient";
+import { useSelector } from "react-redux";
 
 const drawerWidth = 240;
 
@@ -103,6 +106,8 @@ const PageNavigation = () => {
   const theme = useTheme();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [isClosing, setIsClosing] = useState(false);
+  const [registerOpen, setRegisterOpen] = useState(false);
+  const logged = useSelector((state) => state.user.logged);
 
   const navigate = useNavigate();
 
@@ -121,6 +126,8 @@ const PageNavigation = () => {
     }
   };
 
+  const handleRegister = () => setRegisterOpen((prev) => !prev);
+
   const drawer = (
     <div>
       <Toolbar />
@@ -129,7 +136,7 @@ const PageNavigation = () => {
         {links.map((item, index) => (
           <ListItem key={index} disablePadding>
             <ListItemButton>
-              <ListItemIcon style={{color:"#fff"}}>
+              <ListItemIcon style={{ color: "#fff" }}>
                 {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
               </ListItemIcon>
               <ListItemText
@@ -139,16 +146,28 @@ const PageNavigation = () => {
             </ListItemButton>
           </ListItem>
         ))}
+        <ListItem alignItems="center">
+          <Button variant="contained" size="small" onClick={handleRegister}>
+            Register Patient
+          </Button>
+        </ListItem>
       </List>
-      <Divider />
-      <div style={{ display: "flex", alignItems: "center" }}>
+      {/* <Divider /> */}
+      {/* <div style={{ display: "flex", alignItems: "center",width:"100%" }}>
         <Button variant="contained">Register Patient</Button>
-      </div>
+      </div> */}
+      <RegisterPatient open={registerOpen} setOpen={setRegisterOpen} />
     </div>
   );
 
   // Remove this const when copying and pasting into your project.
   // let container = Window !== undefined ? () => Window().document.body : undefined;
+
+  useEffect(() => {
+    if (!logged) {
+      navigate("/login");
+    }
+  }, [logged]);
 
   return (
     <Box sx={{ display: "flex" }}>
