@@ -1,0 +1,14 @@
+.register-txt-btn-section{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 7px;
+}
+.register-txt-section{
+    display: flex;
+    flex-direction: row;
+    align-items: end;
+    justify-content: space-between;
+    gap: 7px;
+}

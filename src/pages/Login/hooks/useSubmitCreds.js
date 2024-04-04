@@ -1,7 +1,10 @@
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { saveLogin } from "../../../slices/userSlice";
 
 export const useSubmitCreds = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const validate = (data, setErrs) => {
     let valid = true;
@@ -23,7 +26,16 @@ export const useSubmitCreds = () => {
     const valid = validate(data, setErrs);
     if (valid) {
       // backend request
-      const role = "receptionist";
+
+      dispatch(
+        saveLogin({
+          logged: true,
+          type: data.username,
+          name: "ABC " + data.username,
+        })
+      );
+      localStorage.setItem("accesstoken", "hgjhdhg");
+      const role = data.username.toLowerCase();
       navigate(`/${role}/dashboard`);
     }
     // show errors
