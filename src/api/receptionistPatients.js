@@ -2,6 +2,7 @@ import axios from "./instance";
 
 export const registerPatient = async(data) => {
   try {
+    console.log(data)
     const res = await axios.post("/api/receptionist/patients/register", data);
     return res.data;
   } catch (error) {

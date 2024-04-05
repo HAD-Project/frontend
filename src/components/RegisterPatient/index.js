@@ -4,6 +4,7 @@ import { Button, DialogActions, DialogContent } from "@mui/material";
 import FormSections from "./FormSections";
 import dayjs from "dayjs";
 import { useNavigate } from "react-router-dom";
+import useRegisterPatient from "./useRegisterPatient";
 
 const RegisterPatient = ({ open, setOpen }) => {
   const initialState = {
@@ -28,6 +29,7 @@ const RegisterPatient = ({ open, setOpen }) => {
   };
   const [data, setData] = useState(initialState);
   const [errs, setErrs] = useState(initialErrState);
+  const {registerPatientData} = useRegisterPatient()
   const navigate = useNavigate();
 
   const handleData = (name, value) => {
@@ -86,8 +88,12 @@ const RegisterPatient = ({ open, setOpen }) => {
 
     if (valid) {
       // make backend submit
-      handleClose();
-      navigate("/receptionist/patients");
+      const res = registerPatientData(data)
+      if(res){
+        handleClose();
+        navigate("/receptionist/patients");
+      }
+      
     } else {
       // show errors
     }
