@@ -100,7 +100,7 @@ const RegisterPatient = ({ open, setOpen }) => {
       handleClose={handleClose}
     >
       <DialogContent>
-        <FormSections data={data} errs={errs} handleData={handleData} />
+        <FormSections data={data} errs={errs} handleData={handleData} setData={setData}/>
       </DialogContent>
       <DialogActions>
         <Button variant="outlined" size="small" onClick={handleClose}>

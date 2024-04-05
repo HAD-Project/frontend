@@ -19,7 +19,7 @@ import dayjs from "dayjs";
 import axios from "axios";
 import { BACKEND_BASE_URI } from "../../utils";
 
-const FormSections = ({ data, errs, handleData }) => {
+const FormSections = ({ data, errs, handleData, setData }) => {
   const [otp, setOtp] = useState("");
   const [otpErr, setOtpErr] = useState("");
   const [validOTP, setValidOTP] = useState(false);
@@ -30,6 +30,10 @@ const FormSections = ({ data, errs, handleData }) => {
     authMethod: "MOBILE_OTP",
     healthid: ""
   }) 
+  const [otpVerification, setOtpVerification] = useState({
+    otp: 0,
+    txnId: ""
+  })
   const handleOTP = (e) => {
     const { value } = e.target;
     setOtp(value);
@@ -62,7 +66,47 @@ const FormSections = ({ data, errs, handleData }) => {
   };
   const submitOTP = () => {
     console.log("submit otp and get data", otp);
+    setOtpVerification({
+      otp: parseInt(otp),
+      txnId: txnId
+    })
+
+    axios.post(BACKEND_BASE_URI + "/api/abdm/confirmMobileOtp", otpVerification, {
+      headers: {
+        "Authorization": "Bearer " + localStorage.getItem("accesstoken")
+      }
+    })
+    .then((response) => {
+      if (response.status === 200) {
+        axios.get(BACKEND_BASE_URI + "/api/abdm/getProfile", {
+          headers: {
+            'Authorization': "Bearer " + localStorage.getItem('accesstoken'),
+            'X-Token': response.data.token
+          }
+        })
+        .then((newResponse) => {
+          if (newResponse.status === 200) {
+            setData({...data, 
+              name: newResponse.data.name, 
+              sex: newResponse.data.gender, 
+              dob: dayjs(new Date(newResponse.data.yearOfBirth + "-" + newResponse.data.monthOfBirth + "-" + newResponse.data.dayOfBirth)),
+              age: dayjs().diff(dayjs(new Date(newResponse.data.dayOfBirth + "-" + newResponse.data.monthOfBirth + "-" + newResponse.data.yearOfBirth)), 'year'),
+              phoneNumber: newResponse.data.mobile,
+              address: newResponse.data.address
+            })
+          }
+        })
+        .catch((error) => {
+          console.log(error)
+        })
+        
+      }
+    })
+    .catch((error) => {
+      console.log(error)
+    })
   };
+  console.log(data)
 
   const handleForm = (e) => {
     console.log(e.target);
@@ -177,7 +221,7 @@ const FormSections = ({ data, errs, handleData }) => {
         <TextField
           name="age"
           label="Age"
-          placeholder="Enter Age"
+          placeholder={data.age === ''? "Enter Phone Number" : ""}
           value={data.age}
           error={errs.age?.length > 0}
           helperText={errs.age}
@@ -203,7 +247,7 @@ const FormSections = ({ data, errs, handleData }) => {
         <TextField
           name="phoneNumber"
           label="Phone Number"
-          placeholder="Enter Phone Number"
+          placeholder={data.phoneNumber === ''? "Enter Phone Number" : ""}
           value={data.phoneNumber}
           error={errs.phoneNumber?.length > 0}
           helperText={errs.phoneNumber}
