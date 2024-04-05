@@ -28,14 +28,9 @@ function App() {
   }, []);
 
   return (
-    <Router>
-      <Routes>
-        <Route path="/doctor" element={<Doctor />} />
-        <Route path="/patient" element={<Patient />} />
-        <Route path="/" element={<>HAD</>}>
-        </Route>
-      </Routes>
-    </Router>
+    <div>
+      <PageRoutes />
+    </div>
   );
 }
 

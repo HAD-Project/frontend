@@ -1,0 +1,109 @@
+.login-page {
+  width: 100vw;
+  height: 100vh;
+  background-size: cover;
+  background-repeat: no-repeat;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.login-card-section {
+  background-color: rgba(0, 126, 167, 0.1);
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
+  border: 2px solid rgba(255, 255, 255, 0.9);
+  box-shadow: 0 0 50px rgba(135, 161, 247, 0.3);
+
+  width: 850px;
+  border-radius: 7px;
+  height: 420px;
+
+  display: flex;
+  flex-direction: row;
+  /* justify-content: space-between; */
+}
+.login-card-image-section {
+}
+.login-card-image {
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+
+  width: 480px;
+  height: 100%;
+  object-fit: cover;
+}
+.login-card-form-section {
+  width: 100%;
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+}
+.login-card-logo {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 5px;
+}
+.login-logo {
+  width: 60px;
+  height: 60px;
+}
+.login-logo-name {
+  font-size: 25px;
+  font-weight: bold;
+  font-style: italic;
+  color: #1f87c9;
+}
+.login-card-form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+}
+.login-input-section {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 5px;
+}
+.login-input-label {
+  font-size: 15px;
+  font-weight: bold;
+  color: #ffffff;
+}
+.login-input {
+  width: 100%;
+  height: 38px;
+  font-size: 14px;
+  color: #ffffff;
+  border: 2px solid #ffffff;
+  border-radius: 7px;
+  padding: 7px;
+  background: transparent;
+}
+.login-input::placeholder {
+  color: #ffffff;
+  opacity: 1; /* Firefox */
+}
+
+.login-input::-ms-input-placeholder {
+  /* Edge 12 -18 */
+  color: #ffffff;
+}
+.login-input:hover,
+.login-input:focus {
+  outline: none !important;
+  border: 2px solid #ffffff;
+  box-shadow: 0 0 5px #ffffff;
+}
+.login-input-err {
+  font-size: 11px;
+  color: #d62828;
+}
+
