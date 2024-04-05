@@ -16,6 +16,8 @@ import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import dayjs from "dayjs";
+import axios from "axios";
+import { BACKEND_BASE_URI } from "../../utils";
 
 const FormSections = ({ data, errs, handleData }) => {
   const [otp, setOtp] = useState("");
@@ -23,6 +25,11 @@ const FormSections = ({ data, errs, handleData }) => {
   const [validOTP, setValidOTP] = useState(false);
   const [req, setReq] = useState(false);
   const [value, setValue] = useState(dayjs(new Date()));
+  const [txnId, setTxnId] = useState("")
+  const [authInit, setAuthInit ] = useState({
+    authMethod: "MOBILE_OTP",
+    healthid: ""
+  }) 
   const handleOTP = (e) => {
     const { value } = e.target;
     setOtp(value);
@@ -32,8 +39,26 @@ const FormSections = ({ data, errs, handleData }) => {
   };
 
   const submitABHA = () => {
+    setAuthInit({
+      authMethod: "MOBILE_OTP",
+      healthid: data.abha
+    })
     console.log("submit abha address to get otp", data.abha);
     setReq(true);
+    axios.post(BACKEND_BASE_URI + "/api/abdm/initAuth", authInit, {
+      headers: {
+        "Authorization": "Bearer " + localStorage.getItem("accesstoken")
+      }
+    })
+    .then((response) => {
+      if (response.status === 200) {
+        setTxnId(response.data.txnId)
+      }
+    })
+    .catch((error) => {
+      console.log(error)
+    })
+
   };
   const submitOTP = () => {
     console.log("submit otp and get data", otp);

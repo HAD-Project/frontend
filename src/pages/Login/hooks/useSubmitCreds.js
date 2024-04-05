@@ -1,6 +1,9 @@
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { saveLogin } from "../../../slices/userSlice";
+import { BACKEND_BASE_URI } from "../../../utils";
+import axios from "axios";
+import { useState } from "react";
 
 export const useSubmitCreds = () => {
   const navigate = useNavigate();
@@ -26,17 +29,26 @@ export const useSubmitCreds = () => {
     const valid = validate(data, setErrs);
     if (valid) {
       // backend request
+      axios.post(BACKEND_BASE_URI + "/api/v1/auth/authenticate", data)
+      .then((response) => {
+        if (response.status === 200) {
+          dispatch(
+            saveLogin({
+              logged: true,
+              type: response.data.message.toLowerCase(),
+              name: "ABC " + response.data.message,
+            })
+          );
+          localStorage.setItem("accesstoken", response.data.token);
+          const role = data.email.split("@")[0].toLowerCase();
+          navigate(`/${role}/dashboard`);
+        }
+      })
+      .catch((error) => {
+        console.log(error)
+      })
 
-      dispatch(
-        saveLogin({
-          logged: true,
-          type: data.username,
-          name: "ABC " + data.username,
-        })
-      );
-      localStorage.setItem("accesstoken", "hgjhdhg");
-      const role = data.username.toLowerCase();
-      navigate(`/${role}/dashboard`);
+      
     }
     // show errors
   };
