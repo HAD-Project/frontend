@@ -29,15 +29,7 @@ const Patient = () => {
             .then(data => setPatientData(data))
             .catch(err => console.log(err));
         }
-<<<<<<< Updated upstream
-
-        fetchPatientData();
-
-    })
-
-=======
     }, []);
->>>>>>> Stashed changes
 
     return (
         <div className={styles.root}>
