@@ -1,5 +1,4 @@
-import PageRoutes from "./routes";
-import "./assets/styles/styles.css";
+import PageRoutes from "./routes/index";
 
 function App() {
   return (

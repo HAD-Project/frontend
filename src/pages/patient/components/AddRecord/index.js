@@ -9,7 +9,7 @@ import { InputLabel, Select } from "@mui/material";
 import { Form } from "react-router-dom";
 import { ADDRESS } from "../../../../utils";
 
-const AddRecord = ({ setShowCreateRecord, patientData }) => {
+const AddRecord = ({ setShowCreateRecord, patientData, fetchRecords }) => {
 
     const cancelCreation = () => {
         setShowCreateRecord(false);
@@ -18,7 +18,7 @@ const AddRecord = ({ setShowCreateRecord, patientData }) => {
     const [recordData, setRecordData] = useState({
         "patientName": patientData.name,
         "abhaId": patientData.abhaId,
-        "recordType": 0,
+        "recordType": "",
         "text": ""
     });
 
@@ -28,14 +28,24 @@ const AddRecord = ({ setShowCreateRecord, patientData }) => {
 
     const createRecord = async () => {
         console.log(recordData);
-        await fetch(`${ADDRESS}/api/doctor/createRecord`, {
+        await fetch(`${ADDRESS}/api/v1/doctor/createRecord`, {
             headers: {
                 "Content-Type": "application/json",
+                "Authorization": `Bearer ${localStorage.getItem("accesstoken")}`
             },
             method: "POST",
-            body: JSON.stringify({...recordData, patientId: patientData.patientId, doctorId: 1, "date": new Date().toISOString()}),
+            body: JSON.stringify({...recordData, patientId: patientData.patientId, "date": new Date().toISOString()}),
         })
-        .then(res => console.log(res.status))
+        .then(res => {
+            if(res.status === 200) {
+                alert("Record created");
+                setShowCreateRecord(false);
+                fetchRecords()
+            }
+            else {
+                alert("Error in creating recod");
+            }
+        })
         .catch(err => console.log(err));
     }
 
@@ -49,10 +59,10 @@ const AddRecord = ({ setShowCreateRecord, patientData }) => {
                     {/* <TextField id="date" name="date" value={recordData.date} onChange={handleChange} label="Date" /> */}
                     <InputLabel id="record-type">Record Type</InputLabel>
                     <Select name="recordType" value={recordData.recordType} onChange={handleChange}>
-                        <MenuItem value={0}>Prescription</MenuItem>
-                        <MenuItem value={1}>Diagnostic</MenuItem>
-                        <MenuItem value={2}>Immunization</MenuItem>
-                        <MenuItem value={3}>Health Document</MenuItem>
+                        <MenuItem value={"prescription"}>Prescription</MenuItem>
+                        <MenuItem value={"diagnostic"}>Diagnostic</MenuItem>
+                        <MenuItem value={"immunization"}>Immunization</MenuItem>
+                        <MenuItem value={"health_document"}>Health Document</MenuItem>
                     </Select>
                     <TextField id="detatextils" name="text" value={recordData.text} onChange={handleChange} label="Details" multiline rows={4} />
                     <div className={styles.buttonGroup}>

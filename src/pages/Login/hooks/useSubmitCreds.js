@@ -32,6 +32,7 @@ export const useSubmitCreds = () => {
       axios.post(BACKEND_BASE_URI + "/api/v1/auth/authenticate", data)
       .then((response) => {
         if (response.status === 200) {
+          console.log(response);
           dispatch(
             saveLogin({
               logged: true,
@@ -39,7 +40,9 @@ export const useSubmitCreds = () => {
               name: "ABC " + response.data.message,
             })
           );
+          console.log("Setting storage");
           localStorage.setItem("accesstoken", response.data.token);
+          console.log("Set storage");
           const role = data.email.split("@")[0].toLowerCase();
           navigate(`/${role}/dashboard`);
         }
