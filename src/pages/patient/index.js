@@ -18,23 +18,40 @@ const Patient = () => {
     const [patientData, setPatientData] = useState({});
     const [showRecord, setShowRecord] = useState(false);
     const [record, setRecord] = useState({});
+    const [recordList, setRecordList] = useState([]);
 
+    const fetchPatientData = async () => {
+        await fetch(`${ADDRESS}/api/v1/doctor/patient?patientId=${patientId}`, {
+            method: "GET",
+            headers: {
+                "Authorization": `Bearer ${localStorage.getItem("accesstoken")}`
+            }
+        })
+        .then(res => res.json())
+        .then(data => setPatientData(data))
+        .catch(err => console.log(err));
+    }
+
+    const fetchRecords = async () => {
+        await fetch(`${ADDRESS}/api/v1/doctor/getRecords?patientId=${patientId}`, {
+            method: "GET",
+            headers: {
+                "Authorization": `Bearer ${localStorage.getItem("accesstoken")}`
+            }
+        })
+        .then(res => res.json())
+        .then(data => setRecordList(data))
+        .catch(err => console.log(err));
+    }
 
     useEffect(() => {
-        const fetchPatientData = async () => {
-            await fetch(`${ADDRESS}/api/doctor/patient?patientId=${patientId}`, {
-                method: "GET",
-            })
-            .then(res => res.json())
-            .then(data => setPatientData(data))
-            .catch(err => console.log(err));
-        }
+        fetchPatientData();
     }, []);
 
     return (
         <div className={styles.root}>
             {showRecord && <RecordCard record={record} setShowRecord={setShowRecord} />}
-            {showCreateRecord && <AddRecord setShowCreateRecord={setShowCreateRecord} patientData={patientData} />}
+            {showCreateRecord && <AddRecord setShowCreateRecord={setShowCreateRecord} patientData={patientData} fetchRecords={fetchRecords} />}
             {showRequestRecord && <RequestRecord setShowRequestRecord={setShowRequestRecord} />}
             <div className={styles.top}>
                 <PatientCard patientData={patientData} />
@@ -45,7 +62,7 @@ const Patient = () => {
                 </div>
             </div>
             <div className={styles.tables}>
-                <RecordsTable setRecord={setRecord} setShowRecord={setShowRecord} />
+                <RecordsTable setRecord={setRecord} setShowRecord={setShowRecord} fetchRecords={fetchRecords} records={recordList} />
             </div>
         </div>
     );

@@ -9,19 +9,10 @@ import Button from '@mui/material/Button';
 import { TableCell } from '@mui/material';
 import { ADDRESS } from "../../../../utils";
 
-const RecordsTable = ({ setRecord, setShowRecord }) => {
+const RecordsTable = ({ records, setRecord, setShowRecord, fetchRecords, setRe }) => {
     
-    const [records, setRecords] = useState([]);
-    const patientId = useSelector((state) => state.doctor.patientId);
 
     useEffect(() => {
-        const fetchRecords = async () => {
-            await fetch(`${ADDRESS}/api/doctor/getRecords?patientId=${patientId}`)
-            .then(res => res.json())
-            .then(data => setRecords(data))
-            .catch(err => console.log(err));
-        }
-
         fetchRecords();
     }, []);
 

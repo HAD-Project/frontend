@@ -9,7 +9,7 @@ import { InputLabel, Select } from "@mui/material";
 import { Form } from "react-router-dom";
 import { ADDRESS } from "../../../../utils";
 
-const AddRecord = ({ setShowCreateRecord, patientData }) => {
+const AddRecord = ({ setShowCreateRecord, patientData, fetchRecords }) => {
 
     const cancelCreation = () => {
         setShowCreateRecord(false);
@@ -31,11 +31,21 @@ const AddRecord = ({ setShowCreateRecord, patientData }) => {
         await fetch(`${ADDRESS}/api/v1/doctor/createRecord`, {
             headers: {
                 "Content-Type": "application/json",
+                "Authorization": `Bearer ${localStorage.getItem("accesstoken")}`
             },
             method: "POST",
             body: JSON.stringify({...recordData, patientId: patientData.patientId, "date": new Date().toISOString()}),
         })
-        .then(res => console.log(res.status))
+        .then(res => {
+            if(res.status === 200) {
+                alert("Record created");
+                setShowCreateRecord(false);
+                fetchRecords()
+            }
+            else {
+                alert("Error in creating recod");
+            }
+        })
         .catch(err => console.log(err));
     }
 
