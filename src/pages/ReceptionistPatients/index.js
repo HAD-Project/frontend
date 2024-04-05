@@ -3,6 +3,7 @@ import "./styles/rec_pat.css";
 import ListSearch from "../../components/ListSearch";
 import PatientBlock from "./components/PatientBlock";
 import useGetPatients from "./hooks/useGetPatients";
+import PatientsList from "./components/PatientsList";
 
 const ReceptionistPatients = () => {
   const { data } = useGetPatients();
@@ -15,7 +16,7 @@ const ReceptionistPatients = () => {
       {/* patients list */}
       <div>
         {data.length > 0 ? (
-          data.map((item, i) => <PatientBlock data={item} />)
+          <PatientsList data={data}/>
         ) : (
           <div>No Data Available</div>
         )}
