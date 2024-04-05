@@ -19,7 +19,12 @@ const PatientList = () => {
 
     useEffect(() => {
         const fetchData = async () => {
-            await fetch(`${ADDRESS}/api/doctor/getPatients?doctorId=1`)
+            await fetch(`${ADDRESS}/api/v1/doctor/getPatients`,{
+                method: "GET",
+                headers: {
+                    "Authorization": `Bearer ${localStorage.getItem("accesstoken")}`
+                }
+            })
             .then(res => res.json())
             .then(data => {
                 setPatientList(data);
