@@ -86,14 +86,16 @@ const FormSections = ({ data, errs, handleData, setData }) => {
         })
         .then((newResponse) => {
           if (newResponse.status === 200) {
+            const dob_update = dayjs(new Date(newResponse.data.yearOfBirth + "-" + newResponse.data.monthOfBirth + "-" + newResponse.data.dayOfBirth));
             setData({...data, 
               name: newResponse.data.name, 
               sex: newResponse.data.gender, 
-              dob: dayjs(new Date(newResponse.data.yearOfBirth + "-" + newResponse.data.monthOfBirth + "-" + newResponse.data.dayOfBirth)),
-              age: dayjs().diff(dayjs(new Date(newResponse.data.dayOfBirth + "-" + newResponse.data.monthOfBirth + "-" + newResponse.data.yearOfBirth)), 'year'),
+              dob:dob_update,
+              age: dayjs().diff(dob_update, 'year'),
               phoneNumber: newResponse.data.mobile,
               address: newResponse.data.address
             })
+            setValue(dob_update)
           }
         })
         .catch((error) => {
