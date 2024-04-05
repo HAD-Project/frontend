@@ -13,7 +13,11 @@ const DoctorList = () => {
     const [ doctors, setDoctors ] = useState([])
 
     useEffect(() => {
-        axios.get("http://localhost:9191/api/admin/getDoctors")
+        axios.get("http://localhost:9191/api/v1/doctor/viewDoctors",{
+            headers:{
+                Authorization:"Bearer "+localStorage.getItem("accesstoken")
+            }
+        })
         .then(response => {
             setDoctors(response.data)
         })
@@ -21,16 +25,18 @@ const DoctorList = () => {
             console.error("Error fetching Doctors: ", error);
         })
     }, [])
-  
+    console.log(doctors)
     return (
         <Container>
             {doctors && doctors.map(doctor => { return (
                 <TableRow 
                     name={doctor.name}
                     username={doctor.username}
+                    email={doctor.email}
                     gender={doctor.gender}
                     qualifications={doctor.qualifications}
-                    department={doctor.department.name}
+                    department={doctor.department}
+                    phone={doctor.phone}
                 />
             )})}
             <div>

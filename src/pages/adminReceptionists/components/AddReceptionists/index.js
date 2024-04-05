@@ -12,6 +12,8 @@ const genderItems = [
 ]
 
 const AddReceptionists = (props) => {
+    
+    const emailreceptionists=props&& props.userData?props.userData.email:null;
     const initialFValues= {
     name: '',
     gender: 'Male',
@@ -19,7 +21,8 @@ const AddReceptionists = (props) => {
     password: '',
     email: '',
     phone: '',
-    qualifications: ''
+    qualification: '',
+    role: 'RECEPTIONIST'
 };
 
     const validate = (fieldValues = receptionists) => {
@@ -30,8 +33,8 @@ const AddReceptionists = (props) => {
             temp.username = fieldValues.username ? "" : "This field is required."
         if ('password' in fieldValues)
             temp.password = fieldValues.password ? "" : "This field is required."
-        if ('qualifications' in fieldValues)
-            temp.qualifications = fieldValues.qualifications ? "" : "This field is required."  
+        if ('qualification' in fieldValues)
+            temp.qualification = fieldValues.qualification ? "" : "This field is required."  
         if ('email' in fieldValues)
             temp.email = (/$^|.+@.+..+/).test(fieldValues.email) ? "" : "Email is not valid."
         if ('phone' in fieldValues)
@@ -41,8 +44,9 @@ const AddReceptionists = (props) => {
             ...temp
         })
 
-        if (fieldValues === receptionists)
-            return Object.values(temp).every(x => x === "")
+        // if (fieldValues === receptionists)
+        //     return Object.values(temp).every(x => x === "")
+        return true;
     }
     const { receptionists,setReceptionists,errors,
       setErrors,handleInputChange, resetForm } = useForm(initialFValues,true,validate);
@@ -51,13 +55,18 @@ const AddReceptionists = (props) => {
     const handleSubmit = async(e) => {
       let response
       e.preventDefault()
+      console.log("teststgsts")
       if(validate())
-      {  if (props.userData === null) {
+      { 
+        console.log("validated") 
+        if (props.userData === null) {
             // Create receptionist
             response = await props.receptionistsService.createReceptionists(receptionists);
+            console.log(response)
         } else {
             // Update receptionist
-            response = await props.receptionistsService.updateReceptionists(props.userData.userId, receptionists);
+            console.log("updating")
+            response = await props.receptionistsService.updateReceptionists(emailreceptionists  , receptionists);
         }
         if (Object.keys(response.data).length > 0) window.location.reload();
     }
@@ -99,7 +108,7 @@ const AddReceptionists = (props) => {
                     <Input label="phone" name="phone" value={receptionists.phone} onChange={handleInputChange} error={errors.phone}/>
                 </Grid>
                 <Grid item xs={12}>
-                    <Input label="qualifications" name="qualifications" value={receptionists.qualifications} onChange={handleInputChange} error={errors.qualifications}/>
+                    <Input label="qualification" name="qualification" value={receptionists.qualification} onChange={handleInputChange} error={errors.qualification}/>
                 </Grid>
                 <div>
                     <Button

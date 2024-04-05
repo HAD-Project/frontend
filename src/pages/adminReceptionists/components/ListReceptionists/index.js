@@ -97,7 +97,7 @@ function ListReceptionists() {
                     >
                         <MenuItem onClick={() => { handleViewClick(d); setOpenViewPopup(true); handleClose(index); }} style={{ backgroundColor: 'rgba(0, 0, 220, 0.5)', color: 'white', borderRadius: '10px', marginBottom: '10px', marginLeft: '5px', marginRight: '5px' }}>View</MenuItem>
                         <MenuItem onClick={() => { handleUpdateClick(d); handleClose(index);}} style={{ backgroundColor: 'rgba(0, 0, 220, 0.5)', color: 'white', borderRadius: '10px', marginBottom: '10px', marginLeft: '5px', marginRight: '5px' }}>Edit</MenuItem>
-                        <MenuItem onClick={() => { handleDeleteClick(d.userId); handleClose(index)}} style={{ backgroundColor: 'rgba(255, 0, 0, 0.49)', color: 'white', borderRadius: '10px', marginLeft: '5px', marginRight: '5px' }}>Delete</MenuItem>
+                        <MenuItem onClick={() => { handleDeleteClick(d.email); handleClose(index)}} style={{ backgroundColor: 'rgba(255, 0, 0, 0.49)', color: 'white', borderRadius: '10px', marginLeft: '5px', marginRight: '5px' }}>Delete</MenuItem>
                     </Menu>
                     </div>
                 </Box>

@@ -4,13 +4,15 @@ import { Grid, TextField } from '@mui/material'
 import axios from 'axios'
 
 const UpdateDoctor = (props) => {
+    const tobeupdated = props.email;
     const [ doctor, setDoctor ] = useState({
             "name": props.name,
             "username": props.username,
-            "password": props.password,
+            "email":props.email,
+            "phone":props.phone,
             "gender": props.gender,
             "qualifications": props.qualifications,
-            "department": "Pathology"
+            "department": "SOME DEPARTMENT"
     })
 
     const handleChange = (event) => {
@@ -21,7 +23,11 @@ const UpdateDoctor = (props) => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        axios.post("http://localhost:9191/api/admin/updateDoctor", doctor)
+        axios.put("http://localhost:9191/api/v1/doctor/updateDoctor/"+tobeupdated, doctor,{
+            headers:{
+                Authorization:"Bearer "+localStorage.getItem("accesstoken")
+            }
+        })
         .then((response) => {
             if (response.status === 200) {
                 console.log("success")
@@ -59,28 +65,17 @@ const UpdateDoctor = (props) => {
                                     onChange={handleChange}
                                 />
                             </Grid>
+                            
                             <Grid xs={6} className={styles.formField}>
                                 <TextField
                                     required
                                     id="outlined-required"
-                                    label="Username"
-                                    defaultValue={doctor.username || ''}
-                                    name='username'
-                                    value={doctor.username || ''}
+                                    label="email"
+                                    defaultValue="Email"
+                                    name='email'
+                                    value={doctor.email || ''}
                                     onChange={handleChange}
                                     disabled
-                                />
-                            </Grid>
-                            <Grid xs={6} className={styles.formField}>
-                                <TextField
-                                    id="outlined-password-input"
-                                    label="Password"
-                                    type="password"
-                                    autoComplete="current-password"
-                                    defaultValue={doctor.password || ''}
-                                    name='password'
-                                    value={doctor.password || ''}
-                                    onChange={handleChange}
                                 />
                             </Grid>
                             <Grid xs={6} className={styles.formField}>
@@ -91,6 +86,17 @@ const UpdateDoctor = (props) => {
                                     defaultValue={doctor.qualifications || ''}
                                     name='qualifications'
                                     value={doctor.qualifications || ''}
+                                    onChange={handleChange}
+                                />
+                            </Grid>
+                            <Grid xs={6} className={styles.formField}>
+                                <TextField
+                                    required
+                                    id="outlined-required"
+                                    label="phone"
+                                    defaultValue="phone"
+                                    name='phone'
+                                    value={doctor.phone || ''}
                                     onChange={handleChange}
                                 />
                             </Grid>

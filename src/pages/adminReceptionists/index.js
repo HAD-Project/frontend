@@ -94,7 +94,7 @@ export default function AdminReception() {
 
   return (
     <Box display="grid" gridTemplateColumns="repeat(12, 1fr)" className={styles.root} sx={{ flexGrow: 1 ,height: '100%'}}>
-      <Box gridColumn="span 12" sx={{ height: '100%' }}>
+      {/* <Box gridColumn="span 12" sx={{ height: '100%' }}>
         <AppBar position="static" sx={{ backgroundColor: '#9C9CFB' }}>
         <Toolbar>
             <IconButton
@@ -146,7 +146,7 @@ export default function AdminReception() {
         </AppBar>
         {renderMobileMenu}
         {renderMenu}
-      </Box>
+      </Box> */}
         <Box gridColumn="span 12"> 
           <ListReceptionists/>
         </Box>

@@ -8,10 +8,13 @@ const AddDoctor = (props) => {
     const [ doctor, setDoctor ] = useState({
             "name": "",
             "username": "",
+            "email":"",
             "password": "",
             "gender": "",
+            "phone":"",
             "qualifications": "",
-            "department": "Pathology"
+            "department": "SOME DEPARTMENT",
+            "role":"DOCTOR"
     })
 
     const handleChange = (event) => {
@@ -22,7 +25,11 @@ const AddDoctor = (props) => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        axios.post("http://localhost:9191/api/admin/createDoctor", doctor)
+        axios.post("http://localhost:9191/api/v1/auth/register", doctor,{
+            headers:{
+                Authorization:"Bearer "+localStorage.getItem("accesstoken")
+            }
+        })
         .then((response) => {
             if (response.status === 200) {
                 props.setDoctors([ ...props.doctors, doctor ])
@@ -74,6 +81,17 @@ const AddDoctor = (props) => {
                             </Grid>
                             <Grid xs={6} className={styles.formField}>
                                 <TextField
+                                    required
+                                    id="outlined-required"
+                                    label="email"
+                                    defaultValue="Email"
+                                    name='email'
+                                    value={doctor.email || ''}
+                                    onChange={handleChange}
+                                />
+                            </Grid>
+                            <Grid xs={6} className={styles.formField}>
+                                <TextField
                                     id="outlined-password-input"
                                     label="Password"
                                     type="password"
@@ -91,6 +109,17 @@ const AddDoctor = (props) => {
                                     defaultValue="Qualifications"
                                     name='qualifications'
                                     value={doctor.qualifications || ''}
+                                    onChange={handleChange}
+                                />
+                            </Grid>
+                            <Grid xs={6} className={styles.formField}>
+                                <TextField
+                                    required
+                                    id="outlined-required"
+                                    label="phone"
+                                    defaultValue="phone"
+                                    name='phone'
+                                    value={doctor.phone || ''}
                                     onChange={handleChange}
                                 />
                             </Grid>

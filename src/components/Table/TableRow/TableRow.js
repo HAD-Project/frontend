@@ -8,6 +8,7 @@ import UpdateDoctor from '../../../pages/admin/components/UpdateDoctor/UpdateDoc
 import axios from 'axios';
 
 const TableRow = (props) => {
+    const tobedeleted = props.email;
     const [ viewDoctor, setViewDoctor ] = useState(false)
     const [ showEditModal, setShowEditModal ] = useState(false)
 
@@ -15,6 +16,8 @@ const TableRow = (props) => {
         "name": props.name,
         "username": props.username,
         "password": props.password,
+        "email":props.email,
+        "phone":props.phone,
         "gender": props.gender,
         "qualifications": props.qualifications,
         "department": "Pathology"
@@ -22,7 +25,11 @@ const TableRow = (props) => {
 
     const deleteDoctor = (event) => {
         event.preventDefault();
-        axios.delete("http://localhost:9191/api/admin/deleteDoctor", { data: doctor })
+        axios.delete("http://localhost:9191/api/v1/doctor/deleteDoctor/"+tobedeleted,{
+            headers:{
+                Authorization:"Bearer "+localStorage.getItem("accesstoken")
+            }
+        })
         .then((response) => {
             if (response.status === 200) {
                 console.log("success");
@@ -73,6 +80,8 @@ const TableRow = (props) => {
                     qualifications={props.qualifications} 
                     gender={props.gender} 
                     password={props.password}
+                    email={props.email}
+                    phone={props.phone}
                     username={props.username}
                     showEditModal={showEditModal}
                     setShowEditModal={setShowEditModal}
