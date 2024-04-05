@@ -6,8 +6,8 @@ import hospital_logo from "../../../assets/images/logo/logo-full.png";
 import { useSubmitCreds } from "../hooks/useSubmitCreds";
 
 const LoginCard = () => {
-  const [creds, setCreds] = useState({ username: "", password: "" });
-  const [errs, setErrs] = useState({ username: "", password: "" });
+  const [creds, setCreds] = useState({ email: "", password: "" });
+  const [errs, setErrs] = useState({ email: "", password: "" });
 
   const { handleSubmit } = useSubmitCreds();
 
@@ -50,12 +50,12 @@ const LoginCard = () => {
         <div className="login-card-form">
           <LoginInput
             type="text"
-            name="username"
-            title="Username"
-            placeholder="Enter Username"
-            value={creds.username}
+            name="email"
+            title="E-Mail"
+            placeholder="Enter E-Mail Address"
+            value={creds.email}
             handleChange={handleChange}
-            err={errs.username}
+            err={errs.email}
           />
           <LoginInput
             type="password"

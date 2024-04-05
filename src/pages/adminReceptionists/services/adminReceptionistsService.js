@@ -1,8 +1,9 @@
 import axios from "axios";
 
 const BASE_URL = process.env.REACT_APP_ADMIN_RECP_BASE_URL
-class AdminReceptionistsService {
+class AdminReceptionistsService { 
     getAllReceptionists() {
+        console.log(BASE_URL)
         return axios.get(BASE_URL + "/viewReceptionist");
     }
     createReceptionists(receptionists){

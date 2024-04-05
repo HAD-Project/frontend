@@ -15,8 +15,13 @@ import {
   useTheme,
   styled,
   Button,
+  Grow,
+  Tooltip,
+  Avatar,
+  Menu,
+  MenuItem,
 } from "@mui/material";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
 import hospital_logo from "../../assets/images/logo/logo-full.png";
 
@@ -25,6 +30,8 @@ import { receptionist_links as links } from "./userNavigationLinks";
 import MailIcon from "@mui/icons-material/Mail";
 import MenuIcon from "@mui/icons-material/Menu";
 import InboxIcon from "@mui/icons-material/MoveToInbox";
+import RegisterPatient from "../RegisterPatient";
+import { useSelector } from "react-redux";
 
 const drawerWidth = 240;
 
@@ -103,8 +110,19 @@ const PageNavigation = () => {
   const theme = useTheme();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [isClosing, setIsClosing] = useState(false);
+  const [registerOpen, setRegisterOpen] = useState(false);
+  const [anchorElUser, setAnchorElUser] = useState(null);
+  const logged = useSelector((state) => state.user.logged);
 
   const navigate = useNavigate();
+
+  const handleOpenUserMenu = (event) => {
+    setAnchorElUser(event.currentTarget);
+  };
+
+  const handleCloseUserMenu = () => {
+    setAnchorElUser(null);
+  };
 
   const handleDrawerClose = () => {
     setIsClosing(true);
@@ -121,6 +139,8 @@ const PageNavigation = () => {
     }
   };
 
+  const handleRegister = () => setRegisterOpen((prev) => !prev);
+
   const drawer = (
     <div>
       <Toolbar />
@@ -129,7 +149,7 @@ const PageNavigation = () => {
         {links.map((item, index) => (
           <ListItem key={index} disablePadding>
             <ListItemButton>
-              <ListItemIcon style={{color:"#fff"}}>
+              <ListItemIcon style={{ color: "#fff" }}>
                 {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
               </ListItemIcon>
               <ListItemText
@@ -139,19 +159,31 @@ const PageNavigation = () => {
             </ListItemButton>
           </ListItem>
         ))}
+        <ListItem alignItems="center">
+          <Button variant="contained" size="small" onClick={handleRegister}>
+            Register Patient
+          </Button>
+        </ListItem>
       </List>
-      <Divider />
-      <div style={{ display: "flex", alignItems: "center" }}>
+      {/* <Divider /> */}
+      {/* <div style={{ display: "flex", alignItems: "center",width:"100%" }}>
         <Button variant="contained">Register Patient</Button>
-      </div>
+      </div> */}
+      <RegisterPatient open={registerOpen} setOpen={setRegisterOpen} />
     </div>
   );
 
   // Remove this const when copying and pasting into your project.
   // let container = Window !== undefined ? () => Window().document.body : undefined;
 
+  useEffect(() => {
+    if (!logged) {
+      navigate("/login");
+    }
+  }, [logged]);
+
   return (
-    <Box sx={{ display: "flex" }}>
+    <Box sx={{ display: "flex",flexGrow:1 }}>
       <CssBaseline />
       <AppBar
         position="fixed"
@@ -174,7 +206,7 @@ const PageNavigation = () => {
           {/* <Typography variant="h6" noWrap component="div">
             Responsive drawer
           </Typography> */}
-          <div className="login-card-logo">
+          <div className="login-card-logo" style={{flexGrow:1}}>
             <img
               className="login-logo"
               src={hospital_logo}
@@ -182,6 +214,35 @@ const PageNavigation = () => {
             />
             <div className="login-logo-name">HSC</div>
           </div>
+          <Box>
+            <Tooltip title="Open settings">
+              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+              </IconButton>
+            </Tooltip>
+            <Menu
+              sx={{ mt: '45px' }}
+              id="menu-appbar"
+              anchorEl={anchorElUser}
+              anchorOrigin={{
+                vertical: 'top',
+                horizontal: 'right',
+              }}
+              keepMounted
+              transformOrigin={{
+                vertical: 'top',
+                horizontal: 'right',
+              }}
+              open={Boolean(anchorElUser)}
+              onClose={handleCloseUserMenu}
+            >
+              {["profile","Logout"].map((setting) => (
+                <MenuItem key={setting} onClick={handleCloseUserMenu}>
+                  <Typography textAlign="center">{setting}</Typography>
+                </MenuItem>
+              ))}
+            </Menu>
+          </Box>
         </Toolbar>
       </AppBar>
       <Box
