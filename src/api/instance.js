@@ -5,7 +5,7 @@ const instance = axios.create({
   timeout: 5000, // Request timeout in milliseconds
   headers: {
     "Content-Type": "application/json", // Default Content-Type header
-    Authorization: localStorage.getItem("accesstoken"), // Example of setting an Authorization header
+    Authorization: `Bearer ${localStorage.getItem("accesstoken")}`, // Example of setting an Authorization header
   },
 });
 
