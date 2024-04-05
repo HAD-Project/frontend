@@ -1,0 +1,16 @@
+.element {
+    background-color: rgba(0, 0, 220, 0.5); /* Blue color with 50% opacity */
+    color: white;
+    padding: 20px;
+    border-radius: 10px;
+    
+  }
+  .image{
+    height: 30px;
+    width: 30px;
+    border-radius: 30px;
+  }
+  .buttons{
+    background-color: rgba(0, 0, 220, 0.5);
+    
+  }
