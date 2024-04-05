@@ -16,6 +16,10 @@ import {
   styled,
   Button,
   Grow,
+  Tooltip,
+  Avatar,
+  Menu,
+  MenuItem,
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
@@ -107,9 +111,18 @@ const PageNavigation = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [isClosing, setIsClosing] = useState(false);
   const [registerOpen, setRegisterOpen] = useState(false);
+  const [anchorElUser, setAnchorElUser] = useState(null);
   const logged = useSelector((state) => state.user.logged);
 
   const navigate = useNavigate();
+
+  const handleOpenUserMenu = (event) => {
+    setAnchorElUser(event.currentTarget);
+  };
+
+  const handleCloseUserMenu = () => {
+    setAnchorElUser(null);
+  };
 
   const handleDrawerClose = () => {
     setIsClosing(true);
@@ -170,7 +183,7 @@ const PageNavigation = () => {
   }, [logged]);
 
   return (
-    <Box sx={{ display: "flex" }}>
+    <Box sx={{ display: "flex",flexGrow:1 }}>
       <CssBaseline />
       <AppBar
         position="fixed"
@@ -193,7 +206,7 @@ const PageNavigation = () => {
           {/* <Typography variant="h6" noWrap component="div">
             Responsive drawer
           </Typography> */}
-          <div className="login-card-logo">
+          <div className="login-card-logo" style={{flexGrow:1}}>
             <img
               className="login-logo"
               src={hospital_logo}
@@ -201,6 +214,35 @@ const PageNavigation = () => {
             />
             <div className="login-logo-name">HSC</div>
           </div>
+          <Box>
+            <Tooltip title="Open settings">
+              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+              </IconButton>
+            </Tooltip>
+            <Menu
+              sx={{ mt: '45px' }}
+              id="menu-appbar"
+              anchorEl={anchorElUser}
+              anchorOrigin={{
+                vertical: 'top',
+                horizontal: 'right',
+              }}
+              keepMounted
+              transformOrigin={{
+                vertical: 'top',
+                horizontal: 'right',
+              }}
+              open={Boolean(anchorElUser)}
+              onClose={handleCloseUserMenu}
+            >
+              {["profile","Logout"].map((setting) => (
+                <MenuItem key={setting} onClick={handleCloseUserMenu}>
+                  <Typography textAlign="center">{setting}</Typography>
+                </MenuItem>
+              ))}
+            </Menu>
+          </Box>
         </Toolbar>
       </AppBar>
       <Box

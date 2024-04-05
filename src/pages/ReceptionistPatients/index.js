@@ -1,11 +1,11 @@
-import React, { useState } from "react";
+import React from "react";
 import "./styles/rec_pat.css";
 import ListSearch from "../../components/ListSearch";
-import PatientBlock from "./components/PatientBlock";
 import useGetPatients from "./hooks/useGetPatients";
+import PatientsList from "./components/PatientsList";
 
 const ReceptionistPatients = () => {
-  const { data } = useGetPatients();
+  const { data, setRefresh } = useGetPatients();
   return (
     <div>
       {/* search section */}
@@ -15,7 +15,7 @@ const ReceptionistPatients = () => {
       {/* patients list */}
       <div>
         {data.length > 0 ? (
-          data.map((item, i) => <PatientBlock data={item} />)
+          <PatientsList data={data} setRefresh={setRefresh} />
         ) : (
           <div>No Data Available</div>
         )}
