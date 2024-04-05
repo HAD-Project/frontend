@@ -10,7 +10,7 @@ import {
   TableRow,
 } from "@mui/material";
 
-const PatientsList = ({ data }) => {
+const PatientsList = ({ data , setRefresh }) => {
   return (
     <TableContainer component={Paper}>
       <Table>
@@ -30,7 +30,7 @@ const PatientsList = ({ data }) => {
         </TableHead>
         <TableBody>
           {data.map((item, i) => (
-            <PatientBlock key={i} data={item} />
+            <PatientBlock key={i} data={item} setRefresh={setRefresh} />
           ))}
         </TableBody>
       </Table>

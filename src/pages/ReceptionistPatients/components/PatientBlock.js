@@ -17,15 +17,23 @@ import {
   Typography,
 } from "@mui/material";
 import { Box, Stack } from "@mui/system";
+import PatientDelete from "./PatientDelete";
 
-const PatientBlock = ({ data }) => {
+const PatientBlock = ({ data , setRefresh }) => {
   const [open, setOpen] = useState(false);
+  const [deleteOpen, setDeleteOpen] = useState(false);
   const [menu, setMenu] = useState(null);
   const handleMenu = (event) => {
     setMenu(event.currentTarget);
   };
   const handleClose = () => {
     setMenu(null);
+  };
+
+  const handleDelete = () => setDeleteOpen(true);
+  const handleDeleteClose = () => {
+    setDeleteOpen(false);
+    handleClose();
   };
 
   return (
@@ -39,17 +47,20 @@ const PatientBlock = ({ data }) => {
         <TableCell component="th" scope="row">
           <Stack direction="row" spacing={1} alignItems={"center"}>
             <Avatar sx={{ width: 30, height: 30 }} variant="rounded" />
-            <span>{"abc" + data.name}</span>
+            <span>{data.name}</span>
           </Stack>
         </TableCell>
-        <TableCell align="left">{12345678}</TableCell>
-        <TableCell align="left">{"Female"}</TableCell>
-        <TableCell align="left">{22}</TableCell>
-        <TableCell align="left">{9805785458}</TableCell>
-        <TableCell align="left">{"bhu kiuyug khufyu"}</TableCell>
-        <TableCell align="left">{"A+"}</TableCell>
+        <TableCell align="left">{data.abhaId}</TableCell>
+        <TableCell align="left">{data.gender}</TableCell>
+        <TableCell align="left">{data.age}</TableCell>
+        <TableCell align="left">{data.mobileNo}</TableCell>
+        <TableCell align="left">{data.address}</TableCell>
+        <TableCell align="left">{data.bloodGrp}</TableCell>
         <TableCell align="left">
-          <Chip label="Discharged" variant="outlined" />
+          <Chip
+            label={data.status ? data.status : "Basic"}
+            variant="outlined"
+          />
         </TableCell>
         <TableCell align="center">
           <IconButton size="small" onClick={handleMenu}>
@@ -58,8 +69,14 @@ const PatientBlock = ({ data }) => {
           <Menu anchorEl={menu} open={Boolean(menu)} onClose={handleClose}>
             <MenuItem onClick={handleClose}>Profile</MenuItem>
             <MenuItem onClick={handleClose}>Edit</MenuItem>
-            <MenuItem onClick={handleClose}>Delete</MenuItem>
+            <MenuItem onClick={handleDelete}>Delete</MenuItem>
           </Menu>
+          <PatientDelete
+            open={deleteOpen}
+            handleClose={handleDeleteClose}
+            setRefresh={setRefresh}
+            data={data}
+          />
         </TableCell>
       </TableRow>
       <TableRow>
