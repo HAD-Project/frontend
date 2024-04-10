@@ -15,6 +15,7 @@
 .hsc-btn-contain:hover {
   box-shadow: 0 0 5px #007ea7;
   font-weight: bolder;
+  cursor: pointer;
 }
 /* card */ /* container card */
 .hsc-card {

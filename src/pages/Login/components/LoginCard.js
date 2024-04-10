@@ -4,6 +4,7 @@ import LoginInput from "./LoginInput";
 // import { Button } from "@mui/material";
 import hospital_logo from "../../../assets/images/logo/logo-full.png";
 import { useSubmitCreds } from "../hooks/useSubmitCreds";
+import "../../../assets/styles/styles.css";
 
 const LoginCard = () => {
   const [creds, setCreds] = useState({ email: "", password: "" });

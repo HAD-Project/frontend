@@ -1,15 +1,10 @@
 import { useState } from "react";
 import styles from "./addrecord.module.css";
-import Paper from "@mui/material/Paper";
-import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
-import Button from "@mui/material/Button";
-import TextField from "@mui/material/TextField";
-import { InputLabel, Select } from "@mui/material";
-import { Form } from "react-router-dom";
+import { Paper, MenuItem, FormControl, Button, TextField, InputLabel, Select, Dialog } from "@mui/material";
 import { ADDRESS } from "../../../../utils";
+import "../../../../assets/styles/styles.css";
 
-const AddRecord = ({ setShowCreateRecord, patientData, fetchRecords }) => {
+const AddRecord = ({ showCreateRecord, setShowCreateRecord, patientData, fetchRecords }) => {
 
     const cancelCreation = () => {
         setShowCreateRecord(false);
@@ -18,8 +13,10 @@ const AddRecord = ({ setShowCreateRecord, patientData, fetchRecords }) => {
     const [recordData, setRecordData] = useState({
         "patientName": patientData.name,
         "abhaId": patientData.abhaId,
+        "date": null,
         "recordType": "",
-        "text": ""
+        "text": "",
+        "display": "",
     });
 
     const handleChange = (e) => {
@@ -27,7 +24,6 @@ const AddRecord = ({ setShowCreateRecord, patientData, fetchRecords }) => {
     }
 
     const createRecord = async () => {
-        console.log(recordData);
         await fetch(`${ADDRESS}/api/v1/doctor/createRecord`, {
             headers: {
                 "Content-Type": "application/json",
@@ -50,28 +46,30 @@ const AddRecord = ({ setShowCreateRecord, patientData, fetchRecords }) => {
     }
 
     return (
-        <div className={styles.root}>
+        <Dialog className={styles.root} open={showCreateRecord} onClose={cancelCreation}>
             <Paper className={styles.paper}>
                 <h3>Add Record</h3>
                 <div className={styles.addRecordForm}>
-                    <TextField id="patient-name" label="Patient Name" value={recordData.patientName} name="patientName" onChange={handleChange} disabled />
-                    <TextField id="abha-id" label="ABHA ID" name="abhaId" value={recordData.abhaId} onChange={handleChange} disabled />
-                    {/* <TextField id="date" name="date" value={recordData.date} onChange={handleChange} label="Date" /> */}
-                    <InputLabel id="record-type">Record Type</InputLabel>
-                    <Select name="recordType" value={recordData.recordType} onChange={handleChange}>
-                        <MenuItem value={"prescription"}>Prescription</MenuItem>
-                        <MenuItem value={"diagnostic"}>Diagnostic</MenuItem>
-                        <MenuItem value={"immunization"}>Immunization</MenuItem>
-                        <MenuItem value={"health_document"}>Health Document</MenuItem>
-                    </Select>
+                    <TextField label="Patient name" id="patient-name" value={recordData.patientName} name="patientName" onChange={handleChange} />
+                    <TextField id="abha-id" label="ABHA ID" name="abhaId" value={recordData.abhaId} onChange={handleChange} />
+                    <FormControl>
+                        <InputLabel id="record-type">Record Type</InputLabel>
+                        <Select label="Record Type" id="record-type" labelId="record-type" name="recordType" value={recordData.recordType} onChange={handleChange}>
+                            <MenuItem value={"Prescription"}>Prescription</MenuItem>
+                            <MenuItem value={"DiagnosticReport"}>Diagnostic</MenuItem>
+                            <MenuItem value={"ImmunizationRecord"}>Immunization</MenuItem>
+                            <MenuItem value={"HealthDocumentRecord"}>Health Document</MenuItem>
+                        </Select>
+                    </FormControl>
+                    <TextField label="Title" name="display" value={recordData.display} onChange={handleChange} />
                     <TextField id="detatextils" name="text" value={recordData.text} onChange={handleChange} label="Details" multiline rows={4} />
                     <div className={styles.buttonGroup}>
-                        <Button variant="contained" onClick={createRecord}>Create</Button>
-                        <Button variant="contained" color="warning" onClick={cancelCreation}>Cancel</Button>
+                        <button className="hsc-btn-contain" style={{width: "90px"}} onClick={createRecord}>Create</button>
+                        <Button variant="contained" color="warning" style={{width: "90px"}} onClick={cancelCreation}>Cancel</Button>
                     </div>
                 </div>
             </Paper>
-        </div>
+        </Dialog>
     );
 }
 

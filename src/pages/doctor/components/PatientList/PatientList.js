@@ -10,6 +10,7 @@ import Button from '@mui/material/Button';
 import { TableCell } from '@mui/material';
 import { useNavigate } from "react-router-dom";
 import { ADDRESS } from "../../../../utils";
+import "../../../../assets/styles/styles.css";
 
 const PatientList = () => {
 
@@ -40,20 +41,20 @@ const PatientList = () => {
     }
 
     return (
-        <Table style={{width: 500}} component={Paper} ali>
-            <TableHead style={{backgroundColor: "rgba(0, 0, 220, 0.5)"}}>
+        <Table component={Paper}>
+            <TableHead>
                 <TableRow>
-                    <TableCell style={{color: "white"}}>Sr. No</TableCell>
-                    <TableCell style={{color: "white"}}>Name</TableCell>
-                    <TableCell style={{color: "white"}}>View Details</TableCell>
+                    <TableCell>Sr. No</TableCell>
+                    <TableCell>Name</TableCell>
+                    <TableCell>View Details</TableCell>
                 </TableRow>
             </TableHead>
             <TableBody>
                 {patientList.map((pat, idx) => (
-                    <TableRow key={pat.patientId} style={{backgroundColor: idx % 2 == 0 ? "white" : "#e8e8e8"}}>
+                    <TableRow key={pat.patientId}>
                         <TableCell>{pat.patientId}</TableCell>
                         <TableCell>{pat.name}</TableCell>
-                        <TableCell><Button variant="contained" style={{backgroundColor: "rgba(0, 0, 220, 0.5)"}} onClick={() => showPatient(pat.patientId)}>View</Button></TableCell>
+                        <TableCell><button className="hsc-btn-contain" onClick={() => showPatient(pat.patientId)}>View</button></TableCell>
                     </TableRow>
                 ))}
             </TableBody>

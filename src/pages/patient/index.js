@@ -9,6 +9,7 @@ import styles from "./patient.module.css";
 import Button from '@mui/material/Button';
 import { ADDRESS } from "../../utils";
 import { viewPatient } from "../../slices/doctorSlice";
+import "../../assets/styles/styles.css";
 
 const Patient = () => {
 
@@ -51,14 +52,15 @@ const Patient = () => {
     return (
         <div className={styles.root}>
             {showRecord && <RecordCard record={record} setShowRecord={setShowRecord} />}
-            {showCreateRecord && <AddRecord setShowCreateRecord={setShowCreateRecord} patientData={patientData} fetchRecords={fetchRecords} />}
-            {showRequestRecord && <RequestRecord setShowRequestRecord={setShowRequestRecord} />}
+            {showCreateRecord && <AddRecord showCreateRecord={showCreateRecord} setShowCreateRecord={setShowCreateRecord} patientData={patientData} fetchRecords={fetchRecords} />}
+            {showRequestRecord && <RequestRecord showRequestRecord={showRequestRecord} patientData={patientData} setShowRequestRecord={setShowRequestRecord} />}
             <div className={styles.top}>
                 <PatientCard patientData={patientData} />
                 <div className={styles.buttonGroup}>
+                    <button variant="contained" className="hsc-btn-contain" onClick={() => setShowCreateRecord(true)}>Add record</button>
+                    <button variant="contained" className="hsc-btn-contain">Link Records</button>
+                    <button variant="contained" className="hsc-btn-contain" onClick={() => setShowRequestRecord(true)}>Request old record</button>
                     <Button variant="contained" color="warning">Delete</Button>
-                    <Button variant="contained" style={{backgroundColor: "rgba(0, 0, 220, 0.5)"}} onClick={() => setShowRequestRecord(true)}>Request old record</Button>
-                    <Button variant="contained" style={{backgroundColor: "rgba(0, 0, 220, 0.5)"}} onClick={() => setShowCreateRecord(true)}>Add record</Button>
                 </div>
             </div>
             <div className={styles.tables}>

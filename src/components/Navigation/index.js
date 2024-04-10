@@ -147,14 +147,13 @@ const PageNavigation = () => {
       <Divider />
       <List>
         {links.map((item, index) => (
-          <ListItem key={index} disablePadding>
+          <ListItem key={index} disablePadding onClick={() => navigate(item.path)}>
             <ListItemButton>
               <ListItemIcon style={{ color: "#fff" }}>
                 {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
               </ListItemIcon>
               <ListItemText
                 primary={item.title}
-                onClick={() => navigate(item.path)}
               />
             </ListItemButton>
           </ListItem>

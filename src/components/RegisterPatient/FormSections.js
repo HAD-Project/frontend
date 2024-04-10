@@ -93,7 +93,8 @@ const FormSections = ({ data, errs, handleData, setData }) => {
               dob:dob_update,
               age: dayjs().diff(dob_update, 'year'),
               phoneNumber: newResponse.data.mobile,
-              address: newResponse.data.address
+              address: newResponse.data.address,
+              abhaAddress: newResponse.data.healthId,
             })
             setValue(dob_update)
           }

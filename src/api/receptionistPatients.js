@@ -3,7 +3,14 @@ import axios from "./instance";
 export const registerPatient = async(data) => {
   try {
     console.log(data)
-    const res = await axios.post("/api/receptionist/patients/register", data);
+    const res = await axios.post("/api/receptionist/patients/register", data, {headers: {
+      "Authorization": `Bearer ${localStorage.getItem("accesstoken")}`
+    }});
+    if(data.abha_available) {
+      await axios.post(`/api/receptionist/patients/generateLinkToken?abhaAddress=${data.abhaAddress}`, {headers: {
+        "Authorization": `Bearer ${localStorage.getItem("accesstoken")}`
+      }});
+    }
     return res.data;
   } catch (error) {
     return null;

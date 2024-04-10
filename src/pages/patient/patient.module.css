@@ -8,8 +8,10 @@
 
 .top {
     display: flex;
-    justify-content: space-around;
     width: 100%;
+    justify-content: space-between;
+    row-gap: 12px;
+    height: 180px;
 }
 
 .buttonGroup {
