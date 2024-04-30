@@ -2,7 +2,6 @@
     width: 100%;
     height: 100%;
     position: absolute;
-    z-index: 3;
     background-color: rgba(42, 42, 42, 0.3);
     display: flex;
     align-items: center;
@@ -11,7 +10,7 @@
 
 .paper {
     width: 600px;
-    height: 650px;
+    height: fit-content;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -26,8 +25,13 @@
     row-gap: 24px;
 }
 
+.input {
+    width: 258px;
+}
+
 .buttonGroup {
     display: flex;
     justify-content: space-between;
+    margin-bottom: 16px;
 }
 

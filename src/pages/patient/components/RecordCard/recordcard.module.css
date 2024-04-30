@@ -12,16 +12,15 @@
 }
 
 .paper {
-    width: 600px;
+    width: 700px;
     height: 600px;
     display: flex;
     flex-direction: column;
     padding: 0 12px;
-    /* align-items: center; */
-    /* justify-content: center; */
     padding-top: 32px;
 }
 
 .button {
     align-self: center;
+    margin: 16px 0;
 }

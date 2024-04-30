@@ -51,7 +51,7 @@ const Patient = () => {
 
     return (
         <div className={styles.root}>
-            {showRecord && <RecordCard record={record} setShowRecord={setShowRecord} />}
+            {showRecord && <RecordCard record={record} showRecord={showRecord} setShowRecord={setShowRecord} />}
             {showCreateRecord && <AddRecord showCreateRecord={showCreateRecord} setShowCreateRecord={setShowCreateRecord} patientData={patientData} fetchRecords={fetchRecords} />}
             {showRequestRecord && <RequestRecord showRequestRecord={showRequestRecord} patientData={patientData} setShowRequestRecord={setShowRequestRecord} />}
             <div className={styles.top}>
