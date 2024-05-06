@@ -7,6 +7,7 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { ADDRESS } from "../../../../utils";
 import "../../../../assets/styles/styles.css";
 import PrescriptionRecord from "../PrescriptionRecord";
+import HealthDocumentUpload from "../HealthDocumentUpload/HealthDocumentUpload";
 import dayjs from "dayjs";
 
 const AddRecord = ({ showCreateRecord, setShowCreateRecord, patientData, fetchRecords }) => {
@@ -17,10 +18,11 @@ const AddRecord = ({ showCreateRecord, setShowCreateRecord, patientData, fetchRe
 
     const [prescriptionList, setPrescriptionList] = useState([]);
 
+    const [files, setFiles] = useState([]);
+
     const [recordData, setRecordData] = useState({
         "patientName": patientData.name,
         "abhaId": patientData.abhaId,
-        "date": null,
         "recordType": "",
         "text": "",
         "display": "",
@@ -32,25 +34,108 @@ const AddRecord = ({ showCreateRecord, setShowCreateRecord, patientData, fetchRe
     }
 
     const createRecord = async () => {
-        await fetch(`${ADDRESS}/api/v1/doctor/createRecord`, {
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": `Bearer ${localStorage.getItem("accesstoken")}`
-            },
-            method: "POST",
-            body: JSON.stringify({...recordData, patientId: patientData.patientId, prescriptionList: prescriptionList}),
-        })
-        .then(res => {
-            if(res.status === 200) {
-                alert("Record created");
-                setShowCreateRecord(false);
-                fetchRecords()
+
+        const txnId = crypto.randomUUID();
+        if(recordData.recordType === "HealthDocumentRecord") {
+            const fileData = new FormData();
+            const rawFiles = []
+            for(const file of files) {
+                fileData.append("files[]", file.file);
             }
-            else {
-                alert("Error in creating recod");
-            }
-        })
-        .catch(err => console.log(err));
+
+            await fetch(`${ADDRESS}/api/v1/doctor/upload?txnId=${txnId}`, {
+                headers: {
+                    "Authorization": `Bearer ${localStorage.getItem("accesstoken")}`,
+                },
+                method: "POST",
+                body: fileData
+            })
+            .then(async (res) => {
+                await fetch(`${ADDRESS}/api/v1/doctor/createRecord?txnId=${txnId}`, {
+                    headers: {
+                        "Authorization": `Bearer ${localStorage.getItem("accesstoken")}`,
+                        "Content-Type": "application/json",
+                    },
+                    method: "POST",
+                    body: JSON.stringify({...recordData, patientId: patientData.patientId, prescriptionList: prescriptionList}),
+                })
+                .then(res => {
+                    if(res.status === 200) {
+                        alert("Record created");
+                        setShowCreateRecord(false);
+                        fetchRecords();
+                    }
+                    else {
+                        alert("Error in creating recod");
+                    }
+                })
+                .catch(err => {
+                    alert("Error in creating record");
+                });
+            });
+
+        }
+        else {
+            await fetch(`${ADDRESS}/api/v1/doctor/createRecord?txnId=${txnId}`, {
+                headers: {
+                    "Authorization": `Bearer ${localStorage.getItem("accesstoken")}`,
+                    "Content-Type": "application/json",
+                },
+                method: "POST",
+                body: JSON.stringify({...recordData, patientId: patientData.patientId, prescriptionList: prescriptionList}),
+            })
+            .then(res => {
+                if(res.status === 200) {
+                    alert("Record created");
+                    setShowCreateRecord(false);
+                    fetchRecords();
+                }
+                else {
+                    alert("Error in creating recod");
+                }
+            })
+            .catch(err => {
+                alert("Error in creating record");
+            });
+        }
+
+        
+
+        // await fetch(`${ADDRESS}/api/v1/doctor/createRecord`, {
+        //     headers: {
+        //         "Content-Type": "application/json",
+        //         "Authorization": `Bearer ${localStorage.getItem("accesstoken")}`
+        //     },
+        //     method: "POST",
+        //     body: JSON.stringify({...recordData, patientId: patientData.patientId, prescriptionList: prescriptionList}),
+        // })
+        // .then(res => {
+        //     if(res.status === 200) {
+        //         alert("Record created");
+        //         setShowCreateRecord(false);
+        //         fetchRecords()
+        //     }
+        //     else {
+        //         alert("Error in creating recod");
+        //     }
+        // })
+        // .then(async () => {
+        //     if(files.length !== 0) {
+        //         await fetch(`${ADDRESS}/api/v1/doctor/uploadFile`, {
+        //             headers: {
+        //                 "Authorization": `Bearer ${localStorage.getItem("accesstoken")}`
+        //             },
+        //             method: "POST",
+        //             body: fileData,
+        //         })
+        //         .catch(err => {
+        //             alert("Error in uploading files");
+        //         });
+        //     }
+        // })
+        // .catch(err => {
+        //     alert("Error in creating recod");
+        // });
     }
 
     return (
@@ -76,6 +161,7 @@ const AddRecord = ({ showCreateRecord, setShowCreateRecord, patientData, fetchRe
                         {recordData.recordType !== "Prescription" && <div style={{display: "flex", flexDirection: "column", rowGap: "24px"}}>
                             <TextField className={styles.textField} id="detatextils" name="text" value={recordData.text} onChange={handleChange} label="Details" multiline rows={4} />
                         </div>}
+                        {recordData.recordType === "HealthDocumentRecord" && <HealthDocumentUpload files={files} setFiles={setFiles} />}
                         <div className={styles.buttonGroup}>
                             <button className="hsc-btn-contain" style={{width: "90px"}} onClick={createRecord}>Create</button>
                             <Button variant="contained" color="warning" style={{width: "90px"}} onClick={cancelCreation}>Cancel</Button>

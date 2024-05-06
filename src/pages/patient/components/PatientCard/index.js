@@ -13,7 +13,7 @@ const PatientCard = ({ patientData }) => {
             <div className={styles.cardRight}>
                 <p>Name: {patientData.name}</p>
                 <p>ABHA ID: {patientData.abhaId}</p>
-                <p>Age: {new Date(patientData.dob).toLocaleDateString()}</p>
+                <p>DOB: {new Date(patientData.dob).toLocaleDateString()}</p>
                 <p>Gender: {patientData.gender}</p>
             </div>
         </Paper>

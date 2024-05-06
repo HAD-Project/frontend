@@ -1,0 +1,13 @@
+.tableContainer {
+    width: 650px;
+    margin-top: 24px;
+}
+
+.textField {
+    width: 160px;
+}
+
+.text {
+    max-width: 120px;
+    word-wrap: break-word;
+}
