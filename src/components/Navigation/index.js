@@ -31,7 +31,8 @@ import MailIcon from "@mui/icons-material/Mail";
 import MenuIcon from "@mui/icons-material/Menu";
 import InboxIcon from "@mui/icons-material/MoveToInbox";
 import RegisterPatient from "../RegisterPatient";
-import { useSelector } from "react-redux";
+import { useSelector,useDispatch } from "react-redux";
+import { logout } from "../../slices/userSlice";
 
 const drawerWidth = 240;
 
@@ -113,6 +114,7 @@ const PageNavigation = () => {
   const [registerOpen, setRegisterOpen] = useState(false);
   const [anchorElUser, setAnchorElUser] = useState(null);
   const logged = useSelector((state) => state.user.logged);
+  const dispatch=useDispatch()
 
   const navigate = useNavigate();
 
@@ -120,7 +122,12 @@ const PageNavigation = () => {
     setAnchorElUser(event.currentTarget);
   };
 
-  const handleCloseUserMenu = () => {
+  const handleCloseUserMenu = (setting) => {
+    if(setting==="logout"){
+      localStorage.clear();
+      window.location.reload(false);
+      navigate("/login")
+    }
     setAnchorElUser(null);
   };
 
@@ -236,8 +243,8 @@ const PageNavigation = () => {
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
-              {["profile","Logout"].map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
+              {["profile","logout"].map((setting) => (
+                <MenuItem key={setting} onClick={()=>handleCloseUserMenu(setting)}>
                   <Typography textAlign="center">{setting}</Typography>
                 </MenuItem>
               ))}

@@ -17,6 +17,7 @@ export const userSlice = createSlice({
       localStorage.setItem("uname", action.payload.name);
     },
     logout: (state, action) => {
+      console.log("called")
       state.logged = false;
       state.type = "";
       state.name = "";

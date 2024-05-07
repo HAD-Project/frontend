@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Grid } from '@material-ui/core';
+import { Grid, TextField } from '@material-ui/core';
 import { Form, useForm } from './useForm';
 import { Input } from '../controls/Input';
 import RadioGroup from '../controls/RadioGroup';
@@ -44,8 +44,8 @@ const AddReceptionists = (props) => {
             ...temp
         })
 
-        // if (fieldValues === receptionists)
-        //     return Object.values(temp).every(x => x === "")
+        if (fieldValues === receptionists)
+            return Object.values(temp).every(x => x === "")
         return true;
     }
     const { receptionists,setReceptionists,errors,
@@ -82,10 +82,10 @@ const AddReceptionists = (props) => {
         <Form onSubmit={handleSubmit}>
             <Grid container spacing={2} >
                 <Grid item xs={12}>
-                    <Input name="name" label="name" value={receptionists.name} onChange={handleInputChange} error={errors.name}/>
+                    <TextField name="name" label="name" value={receptionists.name} onChange={handleInputChange} error={errors.name}/>
                 </Grid>
                 <Grid item xs={12}>
-                    <Input label="username" name="username" value={receptionists.username} onChange={handleInputChange} error={errors.username}/>
+                    <TextField label="username" name="username" value={receptionists.username} onChange={handleInputChange} error={errors.username}/>
                 </Grid>
                 <Grid item xs={12}>
                   <RadioGroup
@@ -97,18 +97,18 @@ const AddReceptionists = (props) => {
                       />
                 </Grid>
                 <Grid item xs={12}>
-                    <Input label="email" name="email" value={receptionists.email} onChange={handleInputChange} error={errors.email}/>
+                    <TextField label="email" name="email" value={receptionists.email} onChange={handleInputChange} error={errors.email}/>
                 </Grid>
                 {(props.userData===null)&&(
                 <Grid item xs={12}>
-                    <Input type="password" label="password" name="password" value={receptionists.password} onChange={handleInputChange} error={errors.password}/>
+                    <TextField type="password" label="password" name="password" value={receptionists.password} onChange={handleInputChange} error={errors.password}/>
                 </Grid>
                 )}
                 <Grid item xs={12}>
-                    <Input label="phone" name="phone" value={receptionists.phone} onChange={handleInputChange} error={errors.phone}/>
+                    <TextField label="phone" name="phone" value={receptionists.phone} onChange={handleInputChange} error={errors.phone}/>
                 </Grid>
                 <Grid item xs={12}>
-                    <Input label="qualification" name="qualification" value={receptionists.qualification} onChange={handleInputChange} error={errors.qualification}/>
+                    <TextField label="qualification" name="qualification" value={receptionists.qualification} onChange={handleInputChange} error={errors.qualification}/>
                 </Grid>
                 <div>
                     <Button
