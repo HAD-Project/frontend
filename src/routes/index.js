@@ -8,6 +8,8 @@ import Doctor from "../pages/doctor";
 import Patient from "../pages/patient";
 import AdminReception from "../pages/adminReceptionists";
 import PageNavigation from "../components/Navigation";
+import AppointmentTable from "../pages/receptionist/components/AppointmentTable/AppointmentTable"
+import AppointmentComponent from "../pages/receptionist/components/AppointmentComponent/AppointmentComponent";
 
 const PageRoutes = () => {
   return (
@@ -28,6 +30,17 @@ const PageRoutes = () => {
             element={<ReceptionistPatients />}
           />
 
+          <Route 
+            path="receptionist/appointments"
+            element={<AppointmentTable />}
+          />
+
+          <Route 
+            path="receptionist/add-appointment"
+            element={<AppointmentComponent />}
+          />
+
+          
           {/* doctor */}
           {/* admin */}
           <Route path="doctor" element={<Doctor />} />

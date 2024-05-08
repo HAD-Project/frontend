@@ -1,27 +1,10 @@
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
-import Button from '@mui/material/Button';
-import TableCell from '@mui/material/TableCell';
-import { Link } from 'react-router-dom';
 import React, { useEffect, useState } from 'react';
-import { deleteAppointment, listAppointments } from '../../../../services/ReceptionistService';
+import { listAppointments, deleteAppointment } from '../../../../services/ReceptionistService';
 import { useNavigate, useParams } from 'react-router-dom';
+import { Button, Paper, Table, TableBody, TableCell, TableHead, TableRow } from '@mui/material';
 
 const AppointmentTable = () => {
-    const [appointments, setAppointments] = useState([{
-        // "id": "1",
-        // "patientID": "P101",
-        // "name": "pat",
-        // "doctor": "doc",
-        // "date": "23-09-2000",
-        // "time": "1230",
-        // "type": "visited",
-        // "status": "stable"
-    }]);
-
+    const [appointments, setAppointments] = useState([]);
     const { id } = useParams();
     const navigator = useNavigate();
 
@@ -29,30 +12,34 @@ const AppointmentTable = () => {
         getAllAppointments();
     }, []);
 
-    function getAllAppointments(){
-        listAppointments().then((response) => {
-            setAppointments(response.data);
-        }).catch(error => {
-            console.error(error);
-        });
+    function getAllAppointments() {
+        listAppointments()
+            .then((response) => {
+                setAppointments(response.data);
+            })
+            .catch(error => {
+                console.error(error);
+            });
     }
+
     function addNewAppointment() {
-        navigator('/add-appointment')
+        navigator('/receptionist/add-appointment');
     }
 
     function editAppointment(id) {
-        navigator(`/edit-appointment/${id}`)
+        navigator(`/edit-appointment/${id}`);
     }
 
     function removeAppointment(id){
-        console.log(id);
-
-        deleteAppointment(id).then((response) => {
-            getAllAppointments();
-        }).catch(error => {
-            console.log(error);
-        })
+        deleteAppointment(id)
+            .then(() => {
+                getAllAppointments();
+            })
+            .catch(error => {
+                console.error(error);
+            });
     }
+       
 
     function pageTitle() {
         if (id) {
@@ -61,15 +48,14 @@ const AppointmentTable = () => {
             return <h2 className='text-center'>Add Appointment</h2>
         }
     }
+
     return (
         <div className='container'>
             {
                 pageTitle()
             }
             <div style={{ display: 'flex', justifyContent: 'center', marginTop: '80px' }}>
-                <Link to={'/add-appointment'}>
-                    <Button variant="contained" style={{ backgroundColor: "rgba(0, 0, 220, 0.5)", borderRadius: '10px', alignContent: "right" }} onClick={addNewAppointment}>Add New Appointment</Button>
-                </Link>
+                <Button variant="contained" style={{ backgroundColor: "rgba(0, 0, 220, 0.5)", borderRadius: '10px', alignContent: "right" }} onClick={addNewAppointment}>Add New Appointment</Button>
             </div>
 
             <div style={{ display: 'flex', justifyContent: 'center', marginTop: '15px' }}>
@@ -85,6 +71,7 @@ const AppointmentTable = () => {
                                 <TableCell style={{ color: "white" }}>Time</TableCell>
                                 <TableCell style={{ color: "white" }}>Type</TableCell>
                                 <TableCell style={{ color: "white" }}>Status</TableCell>
+                                <TableCell style={{ color: "white" }}>Remarks</TableCell>
                                 <TableCell style={{ color: "white" }}>Edit</TableCell>
                                 <TableCell style={{ color: "white" }}>Delete</TableCell>
                             </TableRow>
@@ -92,14 +79,15 @@ const AppointmentTable = () => {
                         <TableBody>
                             {appointments.map((appointment, idx) => (
                                 <TableRow key={appointment.id} style={{ backgroundColor: idx % 2 === 0 ? "white" : "#e8e8e8" }}>
-                                    <TableCell>{appointment.id}</TableCell>
+                                    <TableCell>{appointment.appointmentId}</TableCell>
                                     <TableCell>{appointment.patientID}</TableCell>
-                                    <TableCell>{appointment.name}</TableCell>
-                                    <TableCell>{appointment.doctor}</TableCell>
+                                    <TableCell>{appointment.patientName}</TableCell>
+                                    <TableCell>{appointment.doctorName}</TableCell>
                                     <TableCell>{appointment.date}</TableCell>
                                     <TableCell>{appointment.time}</TableCell>
                                     <TableCell>{appointment.type}</TableCell>
                                     <TableCell>{appointment.status}</TableCell>
+                                    <TableCell>{appointment.remarks}</TableCell>
                                     <TableCell>
                                         <Button variant="contained" style={{ backgroundColor: "rgba(0, 0, 220, 0.5)", borderRadius: "10px" }} onClick={() => editAppointment(appointment.id)}>Edit</Button>
                                     </TableCell>
