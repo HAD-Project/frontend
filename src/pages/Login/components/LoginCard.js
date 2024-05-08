@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import loginImgbg from "../../../assets/images/login/login-card-bg.jpg";
 import LoginInput from "./LoginInput";
-// import { Button } from "@mui/material";
 import hospital_logo from "../../../assets/images/logo/logo-full.png";
 import { useSubmitCreds } from "../hooks/useSubmitCreds";
+import "../../../assets/styles/styles.css";
+import { Button } from "@mui/material";
 
 const LoginCard = () => {
   const [creds, setCreds] = useState({ email: "", password: "" });
@@ -69,9 +70,9 @@ const LoginCard = () => {
         </div>
         {/* sign in button */}
         <div className="login-card-submit">
-          <button className="hsc-btn-contain" onClick={handleLogin}>
+          <Button variant="contained" size="small" onClick={handleLogin}>
             Sign In
-          </button>
+          </Button>
         </div>
       </div>
     </div>

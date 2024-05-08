@@ -1,6 +1,7 @@
 import { useState } from "react";
 import DoctorAppointments from "./components/DoctorAppointments/DoctorAppointments";
 import PatientList from "./components/PatientList/PatientList";
+import "../../assets/styles/styles.css";
 
 const Doctor = () => {
     const screens = {
@@ -11,8 +12,10 @@ const Doctor = () => {
 
     return (
         <>
-            <button onClick={() => setScreen(screens.OVERVIEW)}>Overview</button>
-            <button onClick={() => setScreen(screens.PATIENTS)}>Patients</button>
+            <button className="hsc-btn-contain" style={{margin: "0 4px"}}onClick={() => setScreen(screens.OVERVIEW)}>Overview</button>
+            <button className="hsc-btn-contain" style={{margin: "0 4px"}}onClick={() => setScreen(screens.PATIENTS)}>Patients</button>
+            <br />
+            <br />
             {screen === screens.OVERVIEW && <DoctorAppointments />}
             {screen === screens.PATIENTS && <PatientList />}
         </>

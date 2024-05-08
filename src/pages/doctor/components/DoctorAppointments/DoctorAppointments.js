@@ -31,17 +31,17 @@ const DoctorAppointments = () => {
     ];
 
     return (
-        <Table style={{width: 500}} component={Paper}>
-            <TableHead style={{backgroundColor: "rgba(0, 0, 220, 0.5)"}}>
+        <Table component={Paper}>
+            <TableHead>
                 <TableRow>
-                    <TableCell style={{color: "white"}}>Sr. No</TableCell>
-                    <TableCell style={{color: "white"}}>Name</TableCell>
-                    <TableCell style={{color: "white"}}>Time</TableCell>
+                    <TableCell>Sr. No</TableCell>
+                    <TableCell>Name</TableCell>
+                    <TableCell>Time</TableCell>
                 </TableRow>
             </TableHead>
             <TableBody>
                 {appointments.map((appt, idx) => (
-                    <TableRow key={appt.id} style={{backgroundColor: idx % 2 == 0 ? "white" : "#e8e8e8"}}>
+                    <TableRow key={appt.id}>
                         <TableCell>{appt.id}</TableCell>
                         <TableCell>{appt.name}</TableCell>
                         <TableCell>{appt.time}</TableCell>

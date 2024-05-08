@@ -22,16 +22,18 @@ import {
   MenuItem,
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import { Outlet, useNavigate } from "react-router-dom";
+import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import hospital_logo from "../../assets/images/logo/logo-full.png";
 
-import { receptionist_links as links } from "./userNavigationLinks";
+import {
+  links_mapping,
+} from "./userNavigationLinks";
 
-import MailIcon from "@mui/icons-material/Mail";
 import MenuIcon from "@mui/icons-material/Menu";
-import InboxIcon from "@mui/icons-material/MoveToInbox";
 import RegisterPatient from "../RegisterPatient";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import "./navigation.css";
+import useLogout from "./useLogout";
 
 const drawerWidth = 240;
 
@@ -112,9 +114,12 @@ const PageNavigation = () => {
   const [isClosing, setIsClosing] = useState(false);
   const [registerOpen, setRegisterOpen] = useState(false);
   const [anchorElUser, setAnchorElUser] = useState(null);
-  const logged = useSelector((state) => state.user.logged);
+  const currentUser = useSelector((state) => state.user);
+  const { handleLogout } = useLogout();
 
   const navigate = useNavigate();
+  const location = useLocation();
+  const dispatch = useDispatch();
 
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
@@ -141,29 +146,69 @@ const PageNavigation = () => {
 
   const handleRegister = () => setRegisterOpen((prev) => !prev);
 
+  const handleUserMenu = (type) => {
+    switch (type) {
+      case "Profile":
+        navigate("/profile");
+        break;
+
+      case "Logout":
+        handleLogout();
+        break;
+
+      default:
+        break;
+    }
+    handleCloseUserMenu();
+  };
+
   const drawer = (
     <div>
       <Toolbar />
       <Divider />
       <List>
-        {links.map((item, index) => (
-          <ListItem key={index} disablePadding>
-            <ListItemButton>
-              <ListItemIcon style={{ color: "#fff" }}>
-                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-              </ListItemIcon>
-              <ListItemText
-                primary={item.title}
-                onClick={() => navigate(item.path)}
-              />
-            </ListItemButton>
+        {links_mapping.find((item) => item.type === currentUser.type) ? (
+          links_mapping
+            .find((item) => item.type === currentUser.type)
+            .links.map((item, index) =>
+              item.hidden ? (
+                <></>
+              ) : (
+                <ListItem
+                  key={index}
+                  disablePadding
+                  onClick={() => navigate(item.path)}
+                >
+                  <ListItemButton>
+                    <ListItemIcon
+                      style={{
+                        color:
+                          item.path === location.pathname ? "#1f87c9" : "#fff",
+                      }}
+                    >
+                      <item.icon fontSize="medium" />
+                    </ListItemIcon>
+                    <ListItemText
+                      style={{
+                        color:
+                          item.path === location.pathname ? "#1f87c9" : "#fff",
+                      }}
+                      primary={item.title}
+                    />
+                  </ListItemButton>
+                </ListItem>
+              )
+            )
+        ) : (
+          <></>
+        )}
+        {currentUser.type === "receptionist" && (
+          <ListItem alignItems="center">
+            <Button variant="contained" size="small" onClick={handleRegister}>
+              Register Patient
+            </Button>
           </ListItem>
-        ))}
-        <ListItem alignItems="center">
-          <Button variant="contained" size="small" onClick={handleRegister}>
-            Register Patient
-          </Button>
-        </ListItem>
+        )}
       </List>
       {/* <Divider /> */}
       {/* <div style={{ display: "flex", alignItems: "center",width:"100%" }}>
@@ -176,14 +221,39 @@ const PageNavigation = () => {
   // Remove this const when copying and pasting into your project.
   // let container = Window !== undefined ? () => Window().document.body : undefined;
 
+  const checkUrlAccess = () => {
+    const links = links_mapping.find(
+      (item) => item.type === currentUser.type
+    )?.links;
+
+    let valid = false;
+    if (links && links.length > 0) {
+      const path = location.pathname;
+      for (let i in links) {
+        if (links[i].path === path) {
+          valid = true;
+          break;
+        }
+      }
+    }
+    if (valid === false) {
+      navigate("/403");
+    }
+  };
   useEffect(() => {
-    if (!logged) {
+    if (!currentUser.logged) {
       navigate("/login");
     }
-  }, [logged]);
+  }, [currentUser.logged]);
+
+  useEffect(() => {
+    if (currentUser.logged) {
+      checkUrlAccess();
+    }
+  }, [location.pathname]);
 
   return (
-    <Box sx={{ display: "flex",flexGrow:1 }}>
+    <Box sx={{ display: "flex", flexGrow: 1 }}>
       <CssBaseline />
       <AppBar
         position="fixed"
@@ -206,7 +276,7 @@ const PageNavigation = () => {
           {/* <Typography variant="h6" noWrap component="div">
             Responsive drawer
           </Typography> */}
-          <div className="login-card-logo" style={{flexGrow:1}}>
+          <div className="login-card-logo" style={{ flexGrow: 1 }}>
             <img
               className="login-logo"
               src={hospital_logo}
@@ -214,35 +284,39 @@ const PageNavigation = () => {
             />
             <div className="login-logo-name">HSC</div>
           </div>
-          <Box>
+          <div className="user-section">
+            <div className="nav-user-section">
+              <span className="nav-user-name">{currentUser.name}</span>
+              <span className="nav-user-type">{currentUser.type}</span>
+            </div>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                 <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
               </IconButton>
             </Tooltip>
             <Menu
-              sx={{ mt: '45px' }}
+              sx={{ mt: "45px" }}
               id="menu-appbar"
               anchorEl={anchorElUser}
               anchorOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
+                vertical: "top",
+                horizontal: "right",
               }}
               keepMounted
               transformOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
+                vertical: "top",
+                horizontal: "right",
               }}
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
-              {["profile","Logout"].map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
+              {["Profile", "Logout"].map((setting) => (
+                <MenuItem key={setting} onClick={() => handleUserMenu(setting)}>
                   <Typography textAlign="center">{setting}</Typography>
                 </MenuItem>
               ))}
             </Menu>
-          </Box>
+          </div>
         </Toolbar>
       </AppBar>
       <Box

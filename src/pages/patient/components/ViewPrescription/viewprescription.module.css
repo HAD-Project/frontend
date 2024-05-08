@@ -1,0 +1,19 @@
+.tableContainer {
+    width: 650px;
+    margin-top: 24px;
+}
+
+.newPrescription {
+    width: 650px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.textField {
+    width: 160px;
+}
+
+.text {
+    max-width: 120px;
+    word-wrap: break-word;
+}
