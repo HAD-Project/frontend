@@ -1,7 +1,7 @@
 import React from "react";
 import PatientBlock from "./PatientBlock";
 import {
-    Paper,
+  Paper,
   Table,
   TableBody,
   TableCell,
@@ -10,7 +10,7 @@ import {
   TableRow,
 } from "@mui/material";
 
-const PatientsList = ({ data , setRefresh }) => {
+const PatientsList = ({ data }) => {
   return (
     <TableContainer component={Paper}>
       <Table>
@@ -30,7 +30,7 @@ const PatientsList = ({ data , setRefresh }) => {
         </TableHead>
         <TableBody>
           {data.map((item, i) => (
-            <PatientBlock key={i} data={item} setRefresh={setRefresh} />
+            <PatientBlock key={i} data={item} />
           ))}
         </TableBody>
       </Table>
