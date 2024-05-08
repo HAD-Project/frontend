@@ -10,7 +10,7 @@ import {
   TableRow,
 } from "@mui/material";
 
-const DoctorList = () => {
+const DoctorList = ({data}) => {
   return (
     <ContainerCard title="Doctors Available">
       <TableContainer component={Paper}>
@@ -22,13 +22,13 @@ const DoctorList = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {[1, 2, 3, 4, 5].map((row) => (
+            {data.map((row) => (
               <TableRow
                 key={row}
                 sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
               >
                 <TableCell component="th" scope="row">
-                  {"Dr. John"}
+                  {row.user.name}
                 </TableCell>
                 <TableCell>{"OPD"}</TableCell>
               </TableRow>
