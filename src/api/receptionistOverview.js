@@ -1,9 +1,9 @@
+import { handleAPIStatus } from "../misc/utils";
 import axios from "./instance";
 
-export const receptionistOverview = async (receptionistId) => {
+export const receptionistOverview = async () => {
   try {
-    const res = await axios.get("/api/receptionist/dashboard", {
-      params: { receptionistId },
+    const res = await axios.get("/api/receptionist/overview", {
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${localStorage.getItem("accesstoken")}`,
