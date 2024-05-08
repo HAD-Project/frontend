@@ -86,6 +86,7 @@ const FormSections = ({ data, errs, handleData, setData }) => {
         })
         .then((newResponse) => {
           if (newResponse.status === 200) {
+            console.log(newResponse)
             const dob_update = dayjs(new Date(newResponse.data.yearOfBirth + "-" + newResponse.data.monthOfBirth + "-" + newResponse.data.dayOfBirth));
             setData({...data, 
               name: newResponse.data.name, 
@@ -109,7 +110,6 @@ const FormSections = ({ data, errs, handleData, setData }) => {
       console.log(error)
     })
   };
-  console.log(data)
 
   const handleForm = (e) => {
     console.log(e.target);

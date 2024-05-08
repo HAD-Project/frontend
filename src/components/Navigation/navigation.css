@@ -1,0 +1,21 @@
+.user-section{
+    display: flex;
+    flex-direction: row;
+    gap: 15px;
+}
+.nav-user-section {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: center;
+  /* gap: 5px; */
+}
+.nav-user-name{
+    font-size: 15px;
+    font-weight: bold;
+    color: #fff;
+}
+.nav-user-type{
+    font-size: 14px;
+    color: #fff;
+}

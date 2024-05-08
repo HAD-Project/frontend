@@ -3,11 +3,11 @@ import useDeletePatient from "../hooks/useDeletePatient";
 import { Button, DialogActions, DialogContent } from "@mui/material";
 import Popup from "../../../components/Popup";
 
-const PatientDelete = ({ open, handleClose, data, setRefresh }) => {
+const PatientDelete = ({ open, handleClose, data }) => {
   const { deletePatientData } = useDeletePatient();
 
   const handleDeleteSubmit = async () => {
-    deletePatientData(data.patientId, setRefresh);
+    deletePatientData(data.patientId);
     handleClose()
   };
   return (
