@@ -21,7 +21,7 @@ const AddReceptionists = (props) => {
     password: '',
     email: '',
     phone: '',
-    qualification: '',
+    qualifications: '',
     role: 'RECEPTIONIST'
 };
 
@@ -31,10 +31,10 @@ const AddReceptionists = (props) => {
             temp.name = fieldValues.name ? "" : "This field is required."
         if ('username' in fieldValues)
             temp.username = fieldValues.username ? "" : "This field is required."
-        if ('password' in fieldValues)
+        if ('password' in fieldValues && props.userData === null)
             temp.password = fieldValues.password ? "" : "This field is required."
-        if ('qualification' in fieldValues)
-            temp.qualification = fieldValues.qualification ? "" : "This field is required."  
+        if ('qualifications' in fieldValues)
+            temp.qualifications = fieldValues.qualifications ? "" : "This field is required."  
         if ('email' in fieldValues)
             temp.email = (/$^|.+@.+..+/).test(fieldValues.email) ? "" : "Email is not valid."
         if ('phone' in fieldValues)
@@ -43,7 +43,7 @@ const AddReceptionists = (props) => {
         setErrors({
             ...temp
         })
-
+        console.log(temp)
         if (fieldValues === receptionists)
             return Object.values(temp).every(x => x === "")
         return true;
@@ -56,7 +56,9 @@ const AddReceptionists = (props) => {
       let response
       e.preventDefault()
       console.log("teststgsts")
-      if(validate())
+      const valid=validate()
+      console.log(receptionists)
+      if(valid)
       { 
         console.log("validated") 
         if (props.userData === null) {
@@ -108,7 +110,7 @@ const AddReceptionists = (props) => {
                     <TextField label="phone" name="phone" value={receptionists.phone} onChange={handleInputChange} error={errors.phone}/>
                 </Grid>
                 <Grid item xs={12}>
-                    <TextField label="qualification" name="qualification" value={receptionists.qualification} onChange={handleInputChange} error={errors.qualification}/>
+                    <TextField label="qualifications" name="qualifications" value={receptionists.qualifications} onChange={handleInputChange} error={errors.qualifications}/>
                 </Grid>
                 <div>
                     <Button

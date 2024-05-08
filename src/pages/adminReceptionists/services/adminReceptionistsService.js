@@ -11,7 +11,7 @@ class AdminReceptionistsService {
         });
     }
     createReceptionists(receptionists){
-        return axios.post(CRT_URL,receptionists,{
+        return axios.post(BASE_URL+"/createReceptionist",receptionists,{
             headers:{
                 Authorization:"Bearer "+localStorage.getItem("accesstoken")
             }
