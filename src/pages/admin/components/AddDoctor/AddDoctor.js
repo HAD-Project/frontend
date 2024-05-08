@@ -22,7 +22,7 @@ const AddDoctor = (props) => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        axios.post("http://localhost:9191/api/admin/createDoctor", doctor)
+        axios.post("http://localhost:5000/api/admin/createDoctor", doctor)
         .then((response) => {
             if (response.status === 200) {
                 props.setDoctors([ ...props.doctors, doctor ])

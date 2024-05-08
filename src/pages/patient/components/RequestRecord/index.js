@@ -70,7 +70,7 @@ const RequestRecord = ({ showRequestRecord, setShowRequestRecord, patientData })
                                 onChange={handleChange}
                             >
                                 <MenuItem value={"CAREMGT"}>Care Management</MenuItem>
-                                <MenuItem value={"DiagnosticReport"}>Break the Glass</MenuItem>
+                                <MenuItem value={"BTG"}>Break the Glass</MenuItem>
                                 <MenuItem value={"PUBHLTH"}>Public Health</MenuItem>
                                 <MenuItem value={"HPAYMT"}>Healthcare Payment</MenuItem>
                                 <MenuItem value={"DSRCH"}>Disease Specific Healthcare Research</MenuItem>

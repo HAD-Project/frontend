@@ -98,44 +98,6 @@ const AddRecord = ({ showCreateRecord, setShowCreateRecord, patientData, fetchRe
                 alert("Error in creating record");
             });
         }
-
-        
-
-        // await fetch(`${ADDRESS}/api/v1/doctor/createRecord`, {
-        //     headers: {
-        //         "Content-Type": "application/json",
-        //         "Authorization": `Bearer ${localStorage.getItem("accesstoken")}`
-        //     },
-        //     method: "POST",
-        //     body: JSON.stringify({...recordData, patientId: patientData.patientId, prescriptionList: prescriptionList}),
-        // })
-        // .then(res => {
-        //     if(res.status === 200) {
-        //         alert("Record created");
-        //         setShowCreateRecord(false);
-        //         fetchRecords()
-        //     }
-        //     else {
-        //         alert("Error in creating recod");
-        //     }
-        // })
-        // .then(async () => {
-        //     if(files.length !== 0) {
-        //         await fetch(`${ADDRESS}/api/v1/doctor/uploadFile`, {
-        //             headers: {
-        //                 "Authorization": `Bearer ${localStorage.getItem("accesstoken")}`
-        //             },
-        //             method: "POST",
-        //             body: fileData,
-        //         })
-        //         .catch(err => {
-        //             alert("Error in uploading files");
-        //         });
-        //     }
-        // })
-        // .catch(err => {
-        //     alert("Error in creating recod");
-        // });
     }
 
     return (
