@@ -1,21 +1,24 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./styles/rec_pat.css";
 import ListSearch from "../../components/ListSearch";
 import useGetPatients from "./hooks/useGetPatients";
 import PatientsList from "./components/PatientsList";
+import { useCreateNotification } from "../../components/Notification/useCreateNotification";
 
 const ReceptionistPatients = () => {
-  const { data, setRefresh } = useGetPatients();
+  const { data } = useGetPatients();
+
+  
   return (
     <div>
       {/* search section */}
-      <div>
+      {/* <div>
         <ListSearch />
-      </div>
+      </div> */}
       {/* patients list */}
       <div>
         {data.length > 0 ? (
-          <PatientsList data={data} setRefresh={setRefresh} />
+          <PatientsList data={data}/>
         ) : (
           <div>No Data Available</div>
         )}

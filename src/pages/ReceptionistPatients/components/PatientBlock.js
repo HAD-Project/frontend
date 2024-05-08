@@ -18,10 +18,13 @@ import {
 } from "@mui/material";
 import { Box, Stack } from "@mui/system";
 import PatientDelete from "./PatientDelete";
+import PatientEdit from "./PatientEdit";
+import dayjs from "dayjs";
 
-const PatientBlock = ({ data , setRefresh }) => {
+const PatientBlock = ({ data }) => {
   const [open, setOpen] = useState(false);
   const [deleteOpen, setDeleteOpen] = useState(false);
+  const [editOpen, setEditOpen] = useState(false);
   const [menu, setMenu] = useState(null);
   const handleMenu = (event) => {
     setMenu(event.currentTarget);
@@ -33,6 +36,12 @@ const PatientBlock = ({ data , setRefresh }) => {
   const handleDelete = () => setDeleteOpen(true);
   const handleDeleteClose = () => {
     setDeleteOpen(false);
+    handleClose();
+  };
+
+  const handleEdit = () => setEditOpen(true);
+  const handleEditClose = () => {
+    setEditOpen(false);
     handleClose();
   };
 
@@ -52,7 +61,9 @@ const PatientBlock = ({ data , setRefresh }) => {
         </TableCell>
         <TableCell align="left">{data.abhaId}</TableCell>
         <TableCell align="left">{data.gender}</TableCell>
-        <TableCell align="left">{data.age}</TableCell>
+        <TableCell align="left">
+          {dayjs().diff(dayjs(new Date(data.dob)), "year")}
+        </TableCell>
         <TableCell align="left">{data.mobileNo}</TableCell>
         <TableCell align="left">{data.address}</TableCell>
         <TableCell align="left">{data.bloodGrp}</TableCell>
@@ -68,13 +79,17 @@ const PatientBlock = ({ data , setRefresh }) => {
           </IconButton>
           <Menu anchorEl={menu} open={Boolean(menu)} onClose={handleClose}>
             <MenuItem onClick={handleClose}>Profile</MenuItem>
-            <MenuItem onClick={handleClose}>Edit</MenuItem>
+            <MenuItem onClick={handleEdit}>Edit</MenuItem>
+            <PatientEdit
+              open={editOpen}
+              handleClose={handleEditClose}
+              patientId={data.patientId}
+            />
             <MenuItem onClick={handleDelete}>Delete</MenuItem>
           </Menu>
           <PatientDelete
             open={deleteOpen}
             handleClose={handleDeleteClose}
-            setRefresh={setRefresh}
             data={data}
           />
         </TableCell>
@@ -83,7 +98,19 @@ const PatientBlock = ({ data , setRefresh }) => {
         <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={10}>
           <Collapse in={open} timeout="auto" unmountOnExit>
             <Box sx={{ margin: 1 }}>
-              <Typography variant="h6" gutterBottom component="div">
+              <div>
+                <div>Name : {data.name}</div>
+                <div>Gender : {data.gender}</div>
+                <div>ABHA Address : {data.abhaAddress}</div>
+                <div>
+                  Age : {dayjs().diff(dayjs(new Date(data.dob)), "year")}
+                </div>
+                <div>
+                  Date of Birth :{" "}
+                  {dayjs(new Date(data.dob)).format("DD/MM/YYYY")}
+                </div>
+              </div>
+              {/* <Typography variant="h6" gutterBottom component="div">
                 History
               </Typography>
               <Table size="small" aria-label="purchases">
@@ -109,7 +136,7 @@ const PatientBlock = ({ data , setRefresh }) => {
                     </TableRow>
                   ))}
                 </TableBody>
-              </Table>
+              </Table> */}
             </Box>
           </Collapse>
         </TableCell>

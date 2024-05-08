@@ -3,8 +3,11 @@ import Popup from "../Popup";
 import { Button, DialogActions, DialogContent } from "@mui/material";
 import FormSections from "./FormSections";
 import dayjs from "dayjs";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import useRegisterPatient from "./useRegisterPatient";
+import { updateRefreshPatients } from "../../slices/receptionistSlice";
+import { useDispatch } from "react-redux";
+import { useCreateNotification } from "../Notification/useCreateNotification";
 
 const RegisterPatient = ({ open, setOpen }) => {
   const initialState = {
@@ -29,8 +32,11 @@ const RegisterPatient = ({ open, setOpen }) => {
   };
   const [data, setData] = useState(initialState);
   const [errs, setErrs] = useState(initialErrState);
-  const {registerPatientData} = useRegisterPatient()
+  const { registerPatientData } = useRegisterPatient();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { createNotifcation } = useCreateNotification();
+  const location = useLocation();
 
   const handleData = (name, value) => {
     console.log(name, value);
@@ -72,7 +78,7 @@ const RegisterPatient = ({ open, setOpen }) => {
   };
 
   const submitValidations = (data) => {
-    console.log(data)
+    console.log(data);
     return true;
   };
 
@@ -88,14 +94,22 @@ const RegisterPatient = ({ open, setOpen }) => {
 
     if (valid) {
       // make backend submit
-      const res = registerPatientData(data)
-      if(res){
+      const res = registerPatientData(data);
+      if (res) {
         handleClose();
-        navigate("/receptionist/patients");
+
+        if (location.pathname === "/receptionist/patients") {
+          dispatch(updateRefreshPatients());
+        } else {
+          navigate("/receptionist/patients");
+        }
       }
-      
     } else {
       // show errors
+      createNotifcation("error", {
+        title: "Error",
+        message: "Please clear errors to register the patient.",
+      });
     }
   };
 
@@ -106,7 +120,12 @@ const RegisterPatient = ({ open, setOpen }) => {
       handleClose={handleClose}
     >
       <DialogContent>
-        <FormSections data={data} errs={errs} handleData={handleData} setData={setData}/>
+        <FormSections
+          data={data}
+          errs={errs}
+          handleData={handleData}
+          setData={setData}
+        />
       </DialogContent>
       <DialogActions>
         <Button variant="outlined" size="small" onClick={handleClose}>
