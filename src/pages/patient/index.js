@@ -10,6 +10,7 @@ import Button from '@mui/material/Button';
 import { ADDRESS } from "../../utils";
 import { viewPatient } from "../../slices/doctorSlice";
 import "../../assets/styles/styles.css";
+import { useNavigate } from "react-router-dom";
 
 const Patient = () => {
 
@@ -20,6 +21,7 @@ const Patient = () => {
     const [showRecord, setShowRecord] = useState(false);
     const [record, setRecord] = useState({});
     const [recordList, setRecordList] = useState([]);
+    const navigate = useNavigate();
 
     const fetchPatientData = async () => {
         await fetch(`${ADDRESS}/api/v1/doctor/patient?patientId=${patientId}`, {
@@ -49,6 +51,26 @@ const Patient = () => {
         fetchPatientData();
     }, []);
 
+    const deletePatient = async () => {
+        if(window.confirm("Are you sure you want to delete patient?")) {
+            await fetch(`${ADDRESS}/api/v1/doctor/deletePatient?patientId=${patientId}`, {
+                method: "DELETE",
+                headers: {
+                    "Authorization": `Bearer ${localStorage.getItem("accesstoken")}`
+                }
+            })
+            .then(res => {
+                if(res.status === 200) {
+                    alert("Patient deleted");
+                    navigate("/doctor");
+                }
+            })
+            .catch(err => {
+                alert("Error in deleting patient");
+            })
+        }
+    }
+
     return (
         <div className={styles.root}>
             {showRecord && <RecordCard record={record} showRecord={showRecord} setShowRecord={setShowRecord} />}
@@ -60,7 +82,7 @@ const Patient = () => {
                     <button variant="contained" className="hsc-btn-contain" onClick={() => setShowCreateRecord(true)}>Add record</button>
                     <button variant="contained" className="hsc-btn-contain">Link Records</button>
                     <button variant="contained" className="hsc-btn-contain" onClick={() => setShowRequestRecord(true)}>Request old record</button>
-                    <Button variant="contained" color="warning">Delete</Button>
+                    <Button variant="contained" color="warning" onClick={deletePatient}>Delete</Button>
                 </div>
             </div>
             <div className={styles.tables}>

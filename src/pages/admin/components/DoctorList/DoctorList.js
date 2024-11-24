@@ -5,6 +5,7 @@ import { Container, Grid } from '@mui/material'
 import AddIcon from '@mui/icons-material/Add';
 import styles from './DoctorList.module.css'
 import AddDoctor from '../AddDoctor/AddDoctor';
+import { ADDRESS } from '../../../../utils';
 
 const DoctorList = () => {
 
@@ -13,7 +14,7 @@ const DoctorList = () => {
     const [ doctors, setDoctors ] = useState([])
 
     useEffect(() => {
-        axios.get("http://localhost:9191/api/admin/getDoctors")
+        axios.get(`${ADDRESS}/api/v1/doctor/viewDoctors`, {headers: {Authorization: `Bearer ${localStorage.getItem("accesstoken")}`}})
         .then(response => {
             setDoctors(response.data)
         })
@@ -30,7 +31,7 @@ const DoctorList = () => {
                     username={doctor.username}
                     gender={doctor.gender}
                     qualifications={doctor.qualifications}
-                    department={doctor.department.name}
+                    department={doctor.department}
                 />
             )})}
             <div>

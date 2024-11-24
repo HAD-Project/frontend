@@ -3,6 +3,7 @@ import styles from './AddDoctor.module.css'
 import { Grid, TextField } from '@mui/material'
 import axios from 'axios'
 import { People } from '@mui/icons-material'
+import { ADDRESS } from "../../../../utils";
 
 const AddDoctor = (props) => {
     const [ doctor, setDoctor ] = useState({
@@ -11,7 +12,7 @@ const AddDoctor = (props) => {
             "password": "",
             "gender": "",
             "qualifications": "",
-            "department": "Pathology"
+            "department": "SOME DEPARTMENT"
     })
 
     const handleChange = (event) => {
@@ -22,7 +23,7 @@ const AddDoctor = (props) => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        axios.post("http://localhost:5000/api/admin/createDoctor", doctor)
+        axios.post(`${ADDRESS}/api/v1/doctor/createDoctor`, doctor, {headers: {Authorization: `Bearer ${localStorage.getItem("accesstoken")}`}})
         .then((response) => {
             if (response.status === 200) {
                 props.setDoctors([ ...props.doctors, doctor ])
@@ -37,7 +38,6 @@ const AddDoctor = (props) => {
     const handleClose = () => {
         props.setShowAddModal(!props.showAddModal)
     }
-    console.log(props.doctors)
 
 
   return (

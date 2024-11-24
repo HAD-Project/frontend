@@ -36,9 +36,15 @@ const PageRoutes = () => {
           />
 
           <Route 
+            path="edit-appointment/:id"
+            element={<AppointmentComponent />}
+          />
+
+          <Route 
             path="receptionist/add-appointment"
             element={<AppointmentComponent />}
           />
+
 
           
           {/* doctor */}

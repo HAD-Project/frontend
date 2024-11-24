@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import styles from './UpdateDoctor.module.css'
 import { Grid, TextField } from '@mui/material'
 import axios from 'axios'
+import { ADDRESS } from '../../../../utils'
 
 const UpdateDoctor = (props) => {
     const [ doctor, setDoctor ] = useState({
@@ -10,7 +11,7 @@ const UpdateDoctor = (props) => {
             "password": props.password,
             "gender": props.gender,
             "qualifications": props.qualifications,
-            "department": "Pathology"
+            "department": props.department,
     })
 
     const handleChange = (event) => {
@@ -21,7 +22,7 @@ const UpdateDoctor = (props) => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        axios.post("http://localhost:9191/api/admin/updateDoctor", doctor)
+        axios.post(`${ADDRESS}/api/v1/doctor/updateDoctor/${doctor.username}`, doctor, {headers: {"Authorization": `Bearer ${localStorage.getItem("accesstoken")}`}})
         .then((response) => {
             if (response.status === 200) {
                 console.log("success")

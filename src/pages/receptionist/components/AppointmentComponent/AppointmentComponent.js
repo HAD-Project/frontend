@@ -120,7 +120,6 @@ function formatTime(timeString) {
     // Format the date as "yyyy-MM-dd"
     return `${year}-${month}-${day}`;
   }
-  console.log(doctor);
   function validateForm() {
     let valid = true;
     const errorsCopy = { ...errors };

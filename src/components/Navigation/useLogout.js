@@ -16,7 +16,7 @@ export default function useLogout() {
     const res = await logoutUser();
     if (res) {
       if (res.err) {
-        handleErrStatus(res);
+        // handleErrStatus(res);
         dispatch(logout());
         navigate("/login");
       } else {
@@ -29,10 +29,10 @@ export default function useLogout() {
       }
     } else {
       //   notify the error
-      createNotifcation("error", {
-        title: "Logout",
-        message: "Error Logging out. Please try again.",
-      });
+      // createNotifcation("error", {
+      //   title: "Logout",
+      //   message: "Error Logging out. Please try again.",
+      // });
       dispatch(logout());
       navigate("/login");
     }

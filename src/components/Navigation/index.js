@@ -230,13 +230,14 @@ const PageNavigation = () => {
     if (links && links.length > 0) {
       const path = location.pathname;
       for (let i in links) {
-        if (links[i].path === path) {
+        if (links[i].path === path || path.includes(links[i].path)) {
           valid = true;
           break;
         }
       }
     }
     if (valid === false) {
+      console.log("Access denied");
       navigate("/403");
     }
   };

@@ -24,6 +24,18 @@ export const receptionist_links = [
     path: "/receptionist/profile",
     icon: "",
     hidden:true
+  },
+  {
+    title: "Create appointment",
+    path: "/receptionist/add-appointment",
+    icon: "",
+    hidden:true
+  },
+  {
+    title: "Edit appointment",
+    path: "/edit-appointment",
+    icon: "",
+    hidden: true,
   }
 ];
 

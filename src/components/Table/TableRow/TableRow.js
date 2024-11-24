@@ -6,6 +6,7 @@ import Paper from "@mui/material/Paper";
 import TableRowExtension from './TableRowExtension';
 import UpdateDoctor from '../../../pages/admin/components/UpdateDoctor/UpdateDoctor';
 import axios from 'axios';
+import { ADDRESS } from '../../../utils';
 
 const TableRow = (props) => {
     const [ viewDoctor, setViewDoctor ] = useState(false)
@@ -22,7 +23,7 @@ const TableRow = (props) => {
 
     const deleteDoctor = (event) => {
         event.preventDefault();
-        axios.delete("http://localhost:9191/api/admin/deleteDoctor", { data: doctor })
+        axios.delete(`${ADDRESS}/api/v1/doctor/deleteDoctor/${doctor.username}`, { data: doctor, headers: {Authorization: `Bearer ${localStorage.getItem("accesstoken")}`} })
         .then((response) => {
             if (response.status === 200) {
                 console.log("success");

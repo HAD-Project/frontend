@@ -23,7 +23,7 @@ const AppointmentTable = () => {
     }
 
     function addNewAppointment() {
-        navigator('/receptionist/add-appointment');
+        navigator("/receptionist/add-appointment");
     }
 
     function editAppointment(id) {
@@ -89,10 +89,10 @@ const AppointmentTable = () => {
                                     <TableCell>{appointment.status}</TableCell>
                                     <TableCell>{appointment.remarks}</TableCell>
                                     <TableCell>
-                                        <Button variant="contained" style={{ backgroundColor: "rgba(0, 0, 220, 0.5)", borderRadius: "10px" }} onClick={() => editAppointment(appointment.id)}>Edit</Button>
+                                        <Button variant="contained" style={{ backgroundColor: "rgba(0, 0, 220, 0.5)", borderRadius: "10px" }} onClick={() => editAppointment(appointment.appointmentId)}>Edit</Button>
                                     </TableCell>
                                     <TableCell>
-                                        <Button variant="contained" style={{ backgroundColor: "rgba(240, 0, 0, 0.5)", borderRadius: "10px" }} onClick={() => removeAppointment(appointment.id)}>Delete</Button>
+                                        <Button variant="contained" style={{ backgroundColor: "rgba(240, 0, 0, 0.5)", borderRadius: "10px" }} onClick={() => removeAppointment(appointment.appointmentId)}>Delete</Button>
                                     </TableCell>
                                 </TableRow>
                             ))}
